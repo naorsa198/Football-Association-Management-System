@@ -26,6 +26,54 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+
+      <b-form-group
+        id="input-group-firstName"
+        label-cols-sm="3"
+        label="Firstname:"
+        label-for="firstName"
+      >
+        <b-form-input
+          id="firstName"
+          type="text"
+          v-model="$v.form.firstName.$model"
+          :state="validateState('firstName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.required">
+          Firstname is required
+        </b-form-invalid-feedback>
+         <b-form-invalid-feedback v-if="!$v.form.firstName.alpha">
+          Firstname alpha
+          </b-form-invalid-feedback>
+
+      </b-form-group>
+
+
+
+      <b-form-group
+        id="input-group-lastName"
+        label-cols-sm="3"
+        label="lastName:"
+        label-for="Lastname"
+      >
+        <b-form-input
+          id="lastName"
+          type="text"
+          v-model="$v.form.lastName.$model"
+          :state="validateState('lastName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.lastName.required">
+          Lastname is required
+        </b-form-invalid-feedback>
+         <b-form-invalid-feedback v-if="!$v.form.lastName.alpha">
+          Lastname alpha
+          </b-form-invalid-feedback>
+
+      </b-form-group>
+
+
+
+
       <b-form-group
         id="input-group-country"
         label-cols-sm="3"
@@ -90,6 +138,26 @@
           The confirmed password is not equal to the original password
         </b-form-invalid-feedback>
       </b-form-group>
+
+
+            <b-form-group
+        id="input-group-email"
+        label-cols-sm="3"
+        label="Email:"
+        label-for="email"
+      >
+        <b-form-input
+          id="email"
+          type="email"
+          v-model="$v.form.email.$model"
+          :state="validateState('email')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.email.email">
+          email is required
+        </b-form-invalid-feedback>
+
+      </b-form-group>
+
 
       <b-button type="reset" variant="danger">Reset</b-button>
       <b-button
@@ -159,6 +227,17 @@ export default {
         length: (u) => minLength(3)(u) && maxLength(8)(u),
         alpha
       },
+
+      firstName: {
+        required,
+        alpha
+      },
+
+      lastName: {
+        required,
+        alpha
+      },
+
       country: {
         required
       },
@@ -169,6 +248,10 @@ export default {
       confirmedPassword: {
         required,
         sameAsPassword: sameAs("password")
+      },
+
+      email: {
+        email
       }
     }
   },
