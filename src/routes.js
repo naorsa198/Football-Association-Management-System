@@ -22,11 +22,19 @@ const routes = [
     name: "search",
     component: () => import("./pages/SearchPage")
   },
+
+  {
+    path: "/logout",
+    name: "logout",
+    component: () => import("./components/LogOut")
+  },
+
   {
     path: "*",
     name: "notFound",
     component: NotFound
   }
+
 ];
 
 export default routes;

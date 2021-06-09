@@ -81,7 +81,7 @@ export default {
       username: {
         required, 
       },
-      password: {
+      password : {
         required
       }
     }
@@ -92,15 +92,15 @@ export default {
       return $dirty ? !$error : null;
     },
     async Login() {
-      try {
+      try { 
         const response = await this.axios.post(
-          "https://localhost:3000/user/Login",
+          "http://localhost:3000/login",
           {
             username: this.form.username,
             password: this.form.password
           }
         );
-        // console.log(response);
+         console.log(response);
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);

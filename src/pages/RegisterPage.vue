@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1 class="title">Register</h1>
+    <h4 class="alert" v-if="token">Username already used, Please choose another</h4>
     <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
       <b-form-group
         id="input-group-username"
@@ -133,7 +134,9 @@ import {
 export default {
   name: "Register",
   data() {
+    
     return {
+      token: false,
       form: {
         username: "",
         firstName: "",
@@ -180,9 +183,9 @@ export default {
       return $dirty ? !$error : null;
     },
     async Register() {
-      try {
+       try {
         const response = await this.axios.post(
-          "https://test-for-3-2.herokuapp.com/user/Register",
+          "http://localhost:3000/Register",
           {
             username: this.form.username,
             password: this.form.password
@@ -192,6 +195,11 @@ export default {
         // console.log(response);
       } catch (err) {
         console.log(err.response);
+        if(err.response.status === 409){
+          this.token=true;
+          console.log(this.token);
+        }
+        console.log(this.token);
         this.form.submitError = err.response.data.message;
       }
     },
@@ -205,6 +213,7 @@ export default {
       this.Register();
     },
     onReset() {
+      this.token=false,
       this.form = {
         username: "",
         firstName: "",
@@ -224,5 +233,8 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 500px;
+}
+.alert {
+  color: red;
 }
 </style>
