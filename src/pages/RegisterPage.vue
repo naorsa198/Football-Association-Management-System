@@ -153,7 +153,25 @@
           :state="validateState('email')"
         ></b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.email.email">
-          email is required
+          Email is required
+        </b-form-invalid-feedback>
+
+      </b-form-group>
+
+       <b-form-group
+        id="input-group-img"
+        label-cols-sm="3"
+        label="Link To Profile Img:"
+        label-for="img"
+      >
+        <b-form-input
+          id="img"
+          type="url"
+          v-model="$v.form.img.$model"
+          :state="validateState('img')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.img.img">
+          Url is not  leagal
         </b-form-invalid-feedback>
 
       </b-form-group>
@@ -196,7 +214,8 @@ import {
   maxLength,
   alpha,
   sameAs,
-  email
+  email,
+  url
 } from "vuelidate/lib/validators";
 
 export default {
@@ -205,6 +224,7 @@ export default {
     
     return {
       token: false,
+      url:"",
       form: {
         username: "",
         firstName: "",
@@ -213,6 +233,7 @@ export default {
         password: "",
         confirmedPassword: "",
         email: "",
+        img:"",
         submitError: undefined
       },
       countries: [{ value: null, text: "", disabled: true }],
@@ -252,6 +273,10 @@ export default {
 
       email: {
         email
+      },
+
+      img:{
+        url
       }
     }
   },
@@ -265,13 +290,20 @@ export default {
       const { $dirty, $error } = this.$v.form[param];
       return $dirty ? !$error : null;
     },
+    validateUrl() {
+    let regex = /^(http|https)/;
+    if(this.url.length > 3 && !this.url.match(regex)) {
+        this.url = 'http://' + this.url;
+    }
+  },
     async Register() {
        try {
         const response = await this.axios.post(
           "http://localhost:3000/Register",
           {
             username: this.form.username,
-            password: this.form.password
+            password: this.form.password,
+            imageurl: this.form.img
           }
         );
         this.$router.push("/login");
@@ -304,7 +336,8 @@ export default {
         country: null,
         password: "",
         confirmedPassword: "",
-        email: ""
+        email: "",
+        img:""
       };
       this.$nextTick(() => {
         this.$v.$reset();

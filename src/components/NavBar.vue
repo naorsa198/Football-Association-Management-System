@@ -8,10 +8,18 @@
         <b-nav-item :to="{ name: 'search' }"  tag ="a" active-class="active" class="nav-link">Search</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
+          <h1 class="user">Hello Guest</h1>
           <b-nav-item :to="{ name: 'login' }">Login</b-nav-item>
           <b-nav-item :to="{ name: 'register' }">Register</b-nav-item>
         </b-navbar-nav>
+        
         <b-navbar-nav class="ml-auto" v-else>
+
+<!-- Put profile picrure here  ---------------------------------->
+
+        <a href="#" class="pull-left"><img v-bind:src= "img_url" ></a> 
+
+        <h1 class="user" >Welecom back {{$root.store.username}} </h1>
         <b-nav-item-dropdown right>
           <template #button-content>
             User
@@ -29,10 +37,28 @@
 <script>
     export default {
         name: "NavBar",
-};
+    data() {
+    return {
+      img_url:""
+    }
+  },
+  updated(){
+    if($root.store.username){
+       this.img_url= $root.store.img
+    }
+  }
+ }
+
 
 </script>
 
 <style lang="scss" scoped>
+
+.user{
+  color: red;
+  text-align:left;
+  position: relative;
+  right:550px
+}
 
 </style>

@@ -103,9 +103,19 @@ export default {
          console.log(response);
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
-        this.$root.store.login(this.form.username);
+       
+        // const img = await this.axios.get(
+        //   "http://localhost:3000/img",
+        //   {
+        //     username: this.form.username
+        //   }
+        // );
+         this.$root.store.login(this.form.username, response.data);
         this.$router.push("/");
-      } catch (err) {
+
+
+      } 
+      catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
