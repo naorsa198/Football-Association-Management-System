@@ -140,7 +140,7 @@
       </b-form-group>
 
 
-            <b-form-group
+        <b-form-group
         id="input-group-email"
         label-cols-sm="3"
         label="Email:"

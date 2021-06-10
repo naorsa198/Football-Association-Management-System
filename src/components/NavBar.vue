@@ -17,7 +17,7 @@
 
 <!-- Put profile picrure here  ---------------------------------->
 
-        <a href="#" class="pull-left"><img v-bind:src= "img_url" ></a> 
+        <!-- <img> :src= "{{img_url}}" />  !!TODO -->
 
         <h1 class="user" >Welecom back {{$root.store.username}} </h1>
         <b-nav-item-dropdown right>
