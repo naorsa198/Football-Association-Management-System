@@ -3,11 +3,11 @@
     <h1 class="title">Search Page</h1>
     <b-input-group prepend="Search Query:" id="search-input">
       <b-form-input v-model="searchQuery"></b-form-input>
-      <b-form-input v-if="positionFlag===true" v-model="positionSearch" placeholder="Position Number"></b-form-input>
+      <b-form-input v-if="positionFlag===true" v-model="position" placeholder="Position Number"></b-form-input>
 
 
       <b-input-group-append>
-        <b-button @click="startSearch()" variant="success">Search</b-button>
+        <b-button @click="simpleSearchPlayer()" variant="success">Search</b-button>
       </b-input-group-append>
     </b-input-group>
       <br/>
@@ -21,18 +21,26 @@
 <label for="mike">Mike</label>
 <br>
 <span>Checked names: {{ checkedNames }}</span>
+      <PlayerPreview></PlayerPreview>
+
+
+
+  <!-- <h2>Search Results</h2>
+    <span v-if( status != 0 ) v-for="res in result.data" :key="res.position">
+      <pokemon-preview :position="res.position"></pokemon-preview>
+      <PlayerPreview></PlayerPreview> 
+   </span> -->
+
   </div>
 
   
 </template>
 
 <script>
-import CheckBox from "../components/search";
 
+ import  PlayerPreview from "../components/PlayerPreview";
 export default {
-  //  components: {
-  //   CheckBox 
-  //  },
+   components: { PlayerPreview },
  data() {
     return {
       searchQuery:"",
@@ -40,39 +48,64 @@ export default {
       positionFlag: false,
       position:0,
       teamname:"",
-      results:[]
+      results:[],
+      status:0
     };
   },
 
   methods:{
-    startSearch(){
-      if(this.positionFlag){
-        filterByPosition()
+
+  async simpleSearchPlayer(results){
+        try {
+            let check= [this.searchQuery,this.position,this.teamname]
+            console.log(check);
+            const params = {
+               name:  this.searchQuery,
+            };
+            results = await this.axios.get(
+          `http://localhost:3000/guest/Search/player/${params.name}`
+          );
+      } catch (err) {
+        console.log("server:"+err.response);
       }
+      this.status=results.status
+      console.log(this.status);
+      console.log(results);
+
     },
-  async filterByPosition(){
+
+  async filterByPosition(results){
        try {
-           results = await this.axios.get(
-          "http://localhost:3000/guest/search/plater/filter/{searchfilter}",
-          {
-            name: this.searchQuery,
+            let check= [this.searchQuery,this.position,this.teamname]
+            console.log(check);
+            const params = {
+            name:  this.searchQuery,
             position: this.position,
             teamname: this.teamname
-          }
-        );
-        // console.log(response);
+            };
+            results = await this.axios.get(
+          `http://localhost:3000/guest/Search/filyer/filter/${params.name,params.position,params.teamname}`
+          );
       } catch (err) {
-        console.log(err.response);
+        console.log("server:"+err.response);
        
         console.log(results);
       }
-    }
+    },
+
+
+    async startSearch(){
+      await this.filterByPosition(this.results);
+    },
+
+
+
   },
     updated() {
     if (this.checkedNames.find( element => element === "position")){
         this.positionFlag=true;
-        
       }
+    else this.positionFlag=false;
     },
 }
 </script>

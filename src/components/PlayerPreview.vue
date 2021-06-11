@@ -1,14 +1,16 @@
 <template>
   <div>
+
   <b-card
+
     no-body
     style="max-width: 20rem;"
-    img-src="{{image}}"
+
     img-alt="Image"
     img-top
   >
     <template #header>
-      <h4 class="mb-0">{{name}}}}</h4>
+      <h4 class="mb-0">{{name}}</h4>
     </template>
 
     <!-- <b-card-body>
@@ -23,6 +25,15 @@
     <b-list-group flush>
       <b-list-group-item> {{position}} </b-list-group-item>
       <b-list-group-item> {{teamName}} </b-list-group-item>
+      <!-- *********** NEW ******************************** -->
+      <b-list-group-item> {{CommonName}} </b-list-group-item>
+      <b-list-group-item> {{nationality}} </b-list-group-item>
+      <b-list-group-item> {{birthdate}} </b-list-group-item>
+      <b-list-group-item> {{birthcountry}} </b-list-group-item>
+      <b-list-group-item> {{height}} </b-list-group-item>
+      <b-list-group-item> {{weight}} </b-list-group-item>
+
+
       <!-- <b-list-group-item>Vestibulum at eros</b-list-group-item> -->
     </b-list-group>
 
@@ -31,16 +42,16 @@
       <a href="#" class="card-link">Another link</a>
     </b-card-body> -->
 
-    <!-- <b-card-footer>This is a footer</b-card-footer>
+   <b-card-footer>This is a footer</b-card-footer>
 
-    <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img> -->
+    <b-card-img src="https://placekitten.com/480/210" alt="Image" bottom></b-card-img>
   </b-card>
 </div>
 </template>
 
 <script>
     export default {
-        name: "PlaterPreview",
+        name: "PlayerPreview",
        props: {
       position: {
         type: Number,
@@ -58,8 +69,33 @@
         type: String,
         required: true
       },
+      // ***************** NEW *****************************`
+      CommonName:{
+         type: String,
+        required: true
+      },
+      nationality:{
+         type: String,
+        required: true
+      },
+      birthdate:{
+         type: String,
+        required: true
+      },
+      birthcountry:{
+         type: String,
+        required: true
+      },
+      height:{
+         type: Number,
+        required: true
+      },
+      weight:{
+         type: Number,
+        required: true
+      },
   }, 
-        
+
     }
 </script>
 
