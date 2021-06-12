@@ -46,6 +46,12 @@
 <span>Checked names: {{checkedNames}}</span>
 <!-- ----------------------------------------------- result search-------------------------- -->
 
+<h1 v-if="emptyResult"> Not Result Found  </h1>
+
+
+
+
+
 <div v-if="playersearch || positionFlag || filterTeamName">
 
 <span  v-for="res in searchResult" :key="res">
@@ -88,6 +94,7 @@ export default {
       teamsearch: false,
       searchTeamFlag:false,
       filterTeamName: false,
+      emptyResult: false,
       position:0,
       teamname:"",
       results: Object,
@@ -154,9 +161,13 @@ export default {
     },
 
 
+    flip(){
+      this.emptyResult=true;
+    },
+
     async startSearch(){
       console.log(this.playersearch);
-       if(this.playersearch){
+       if(this.playersearch || this.positionFlag || filterTeamName){
           if(!this.positionFlag && !this.teamFlag){
             await this.simpleSearchPlayer();
           }
@@ -173,10 +184,16 @@ export default {
   computed:{
       searchResult(){
         if(this.status===200){
+          if(this.results.length ===0 ){
+           console.log(this.results.length);
+          this.flip();
+          }
           return this.results
         }
-      else return [];
-  }},
+      else
+        return [];
+      }
+  },
 
   beforeDestroy() {
     localStorage.results = this.searchResult;
