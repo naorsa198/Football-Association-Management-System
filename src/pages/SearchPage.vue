@@ -11,7 +11,7 @@
       </b-input-group-append>
     </b-input-group>
       <br/>
-      Your search Query: {{ searchQuery }}
+      Your search Query: {{searchQuery }}
       <br>
 <input type="checkbox" id="postion" value="position" v-model="checkedNames">
 <label for="jack">Filter By position</label>
@@ -20,8 +20,8 @@
 <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
 <label for="mike">Mike</label>
 <br>
-<span>Checked names: {{ checkedNames }}</span>
-      <PlayerPreview></PlayerPreview>
+<span>Checked names: {{checkedNames}}</span>
+<PlayerPreview :propObj="results"></PlayerPreview>
 
 
 
@@ -40,29 +40,31 @@
 
  import  PlayerPreview from "../components/PlayerPreview";
 export default {
-   components: { PlayerPreview },
- data() {
+  components: { PlayerPreview },
+  //   props:{
+  //   anObject: Object
+  // },
+  data() {
     return {
       searchQuery:"",
       checkedNames:[],
       positionFlag: false,
       position:0,
       teamname:"",
-      results:[],
+      results: Object,
       status:0
     };
   },
-
   methods:{
 
   async simpleSearchPlayer(results){
         try {
-            let check= [this.searchQuery,this.position,this.teamname]
-            console.log(check);
-            const params = {
+          let check= [this.searchQuery,this.position,this.teamname]
+          console.log(check);
+          const params = {
                name:  this.searchQuery,
             };
-            results = await this.axios.get(
+          results = await this.axios.get(
           `http://localhost:3000/guest/Search/player/${params.name}`
           );
       } catch (err) {
@@ -71,7 +73,7 @@ export default {
       this.status=results.status
       console.log(this.status);
       console.log(results);
-
+      this.results= results.data
     },
 
   async filterByPosition(results){

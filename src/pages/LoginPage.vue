@@ -17,7 +17,7 @@
         <b-form-invalid-feedback>
           Username is required
         </b-form-invalid-feedback>
-      </b-form-group>
+      </b-form-group> <!-- end Username input -->
 
       <b-form-group
         id="input-group-Password"
@@ -34,7 +34,7 @@
         <b-form-invalid-feedback>
           Password is required
         </b-form-invalid-feedback>
-      </b-form-group>
+      </b-form-group> <!-- end Password input -->
 
       <b-button
         type="submit"

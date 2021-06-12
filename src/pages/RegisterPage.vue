@@ -24,7 +24,7 @@
         <b-form-invalid-feedback v-if="!$v.form.username.alpha">
           Username alpha
         </b-form-invalid-feedback>
-      </b-form-group>
+      </b-form-group> <!-- end Username input -->
 
 
       <b-form-group
@@ -46,7 +46,7 @@
           Firstname alpha
           </b-form-invalid-feedback>
 
-      </b-form-group>
+      </b-form-group> <!-- end first name input -->
 
 
 
@@ -69,7 +69,7 @@
           Lastname alpha
           </b-form-invalid-feedback>
 
-      </b-form-group>
+      </b-form-group> <!-- end last name input -->
 
 
 
@@ -89,7 +89,7 @@
         <b-form-invalid-feedback>
           Country is required
         </b-form-invalid-feedback>
-      </b-form-group>
+      </b-form-group> <!-- end country input -->
 
       <b-form-group
         id="input-group-Password"
@@ -115,7 +115,7 @@
         >
           Have length between 5-10 characters long
         </b-form-invalid-feedback>
-      </b-form-group>
+      </b-form-group> <!-- end password input -->
 
       <b-form-group
         id="input-group-confirmedPassword"
@@ -137,10 +137,10 @@
         >
           The confirmed password is not equal to the original password
         </b-form-invalid-feedback>
-      </b-form-group>
+      </b-form-group> <!-- end confirmedPassword input -->
 
 
-        <b-form-group
+      <b-form-group
         id="input-group-email"
         label-cols-sm="3"
         label="Email:"
@@ -156,9 +156,9 @@
           Email is required
         </b-form-invalid-feedback>
 
-      </b-form-group>
+      </b-form-group> <!-- end email input -->
 
-       <b-form-group
+      <b-form-group
         id="input-group-img"
         label-cols-sm="3"
         label="Link To Profile Img:"
@@ -174,7 +174,7 @@
           Url is not  leagal
         </b-form-invalid-feedback>
 
-      </b-form-group>
+      </b-form-group> <!-- end image input -->
 
 
       <b-button type="reset" variant="danger">Reset</b-button>
