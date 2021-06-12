@@ -3,25 +3,48 @@
     <h1 class="title">Search Page</h1>
     <b-input-group prepend="Search Query:" id="search-input">
       <b-form-input v-model="searchQuery"></b-form-input>
-      <b-form-input v-if="positionFlag===true" v-model="position" placeholder="Position Number"></b-form-input>
+      
+      <b-form-input v-if="positionFlag===true" v-model="position" placeholder="Position Number">
+        <b-input-group-append>
+          <b-button @click="simpleSearchPlayer()" variant="success">Search</b-button>
+        </b-input-group-append>
+      </b-form-input>
 
+      <!-- <b-form-input v-else-if="searchTeamFlag===true">
+        <b-input-group-append>
+          <b-button @click="searchTeam()" variant="success">Search</b-button>
+        </b-input-group-append>
+      </b-form-input>
+
+      <b-form-input v-else>
+        <b-input-group-append>
+          <b-button @click="simpleSearchPlayer()" variant="success">Search</b-button>
+        </b-input-group-append>
+      </b-form-input> -->
 
       <b-input-group-append>
         <b-button @click="simpleSearchPlayer()" variant="success">Search</b-button>
       </b-input-group-append>
+
     </b-input-group>
-      <br/>
-      Your search Query: {{searchQuery }}
-      <br>
-<input type="checkbox" id="postion" value="position" v-model="checkedNames">
-<label for="jack">Filter By position</label>
-<input type="checkbox" id="john" value="John" v-model="checkedNames">
-<label for="john">John</label>
-<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
-<label for="mike">Mike</label>
-<br>
+
+    <br/>
+    Your search Query: {{searchQuery }}
+    <br>
+      <input type="checkbox" id="postion" value="position" v-model="checkedNames">
+      <label for="jack">Filter By position</label>
+      <input type="checkbox" id="team" value="Team" v-model="checkedNames">
+      <label for="john">Search Team</label>
+      <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+      <label for="mike">Mike</label>
+  <br>
+
 <span>Checked names: {{checkedNames}}</span>
-<PlayerPreview :propObj="results"></PlayerPreview>
+<span v-for="res in searchResult" :key="res">
+      <PlayerPreview :propObj="res"></PlayerPreview>
+</span>
+
+  <TeamPreview :propObj="results"></TeamPreview>
 
 
 
@@ -49,6 +72,7 @@ export default {
       searchQuery:"",
       checkedNames:[],
       positionFlag: false,
+      searchTeamFlag:false,
       position:0,
       teamname:"",
       results: Object,
@@ -95,6 +119,25 @@ export default {
       }
     },
 
+    async searchTeam(results){
+        try {
+          let check= [this.searchQuery]
+          console.log(check);
+          const params = {
+               name:  this.searchQuery,
+            };
+          results = await this.axios.get(
+          `http://localhost:3000/guest/Search/team/${params.name}`
+          );
+      } catch (err) {
+        console.log("server:"+err.response);
+      }
+      this.status=results.status
+      console.log(this.status);
+      console.log(results);
+      this.results= results.data
+    },
+
 
     async startSearch(){
       await this.filterByPosition(this.results);
@@ -103,12 +146,19 @@ export default {
 
 
   },
-    updated() {
+  computed:{
+      searchResult(){
+        if(this.status===200){
+          return this.results
+        }
+      else return [];
+  }},
+  updated() {
     if (this.checkedNames.find( element => element === "position")){
         this.positionFlag=true;
       }
     else this.positionFlag=false;
-    },
+    }
 }
 </script>
 
