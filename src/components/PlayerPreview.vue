@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class = "card">
 
   <b-card
 
@@ -10,7 +10,7 @@
     img-top
   >
     <template #header>
-      <h4 class="mb-0">{{propObj[0].name}}</h4>
+      <h4 class="mb-0">{{propObj.name}}</h4>
     </template>
 
     <!-- <b-card-body>
@@ -24,18 +24,24 @@
 
     <b-list-group flush>
       <!-- <b-list-group-item> {{propObj}} </b-list-group-item> -->
-      <b-list-group-item> {{propObj[0].position}} </b-list-group-item>
+      <b-list-group-item> {{propObj.position}} </b-list-group-item>
       <br>
-      <b-list-group-item> {{propObj[0].team_name}} </b-list-group-item>
+      <b-list-group-item> {{propObj.team_name}} </b-list-group-item>
       <br>
-      <img :src="propObj[0].image" />
+      <img :src="get_image()" />
+      <br>
       <!-- *********** NEW ******************************** -->
-      <b-list-group-item> {{CommonName}} </b-list-group-item>
-      <b-list-group-item> {{nationality}} </b-list-group-item>
-      <b-list-group-item> {{birthdate}} </b-list-group-item>
-      <b-list-group-item> {{birthcountry}} </b-list-group-item>
-      <b-list-group-item> {{height}} </b-list-group-item>
-      <b-list-group-item> {{weight}} </b-list-group-item>
+      <!-- <b-list-group-item> {{propObj.CommonName}} </b-list-group-item>
+      <br>
+      <b-list-group-item> {{propObj.nationality}} </b-list-group-item>
+      <br>
+      <b-list-group-item> {{propObj.birthdate}} </b-list-group-item>
+      <br>
+      <b-list-group-item> {{propObj.birthcountry}} </b-list-group-item>
+      <br>
+      <b-list-group-item> {{propObj.height}} </b-list-group-item>
+      <br>
+      <b-list-group-item> {{propObj.weight}} </b-list-group-item> -->
       
 
 
@@ -57,52 +63,22 @@
         propObj:{type: Object, required: false, default(){
           return {message: 'hello'}
         }},
-        // name: {
-        //   type: String,
-        //   required: true,
-        // },
-        // position: {
-        //   type: Number,
-        //   required: true
-        // },
-        // image: {
-        //   type: URL,
-        //   required: true
-        // },
-        // teamName: {
-        //   type: String,
-        //   required: true
-        // },
-        // // ***************** NEW *****************************`
-        // CommonName:{
-        //   type: String,
-        //   required: true
-        // },
-        // nationality:{
-        //   type: String,
-        //   required: true
-        // },
-        // birthdate:{
-        //   type: String,
-        //   required: true
-        // },
-        // birthcountry:{
-        //   type: String,
-        //   required: true
-        // },
-        // height:{
-        //   type: Number,
-        //   required: true
-        // },
-        // weight:{
-        //   type: Number,
-        //   required: true
-        },
-  // },
-
+    },
+    methods: {
+    get_image() {
+        if(this.propObj.image != undefined){
+        return this.propObj.image;
+        }
+        else return "https://assets.pokemon.com/assets/cms2/img/pokedex/full/158.png"
+      }
+    }
     }
 </script>
 
 <style lang="scss" scoped>
-
+.card {
+  width: 18rem;
+  display: inline-block;
+  margin: 10px;
+}
 </style>
