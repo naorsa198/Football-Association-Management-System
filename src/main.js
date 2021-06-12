@@ -71,6 +71,7 @@ Vue.config.productionTip = false;
 const shared_data = {
   username: localStorage.username,
   img: localStorage.img,
+  
   // username: "hilla",
   login(username,img) {
     localStorage.setItem("username", username);
