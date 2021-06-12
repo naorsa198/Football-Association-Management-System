@@ -28,7 +28,7 @@
       <br>
       <b-list-group-item> {{propObj.team_name}} </b-list-group-item>
       <br>
-      <img :src="get_image()" />
+      <img :src="get_image()" height="150px" width="150px"/>
       <br>
       <!-- *********** NEW ******************************** -->
       <!-- <b-list-group-item> {{propObj.CommonName}} </b-list-group-item>
@@ -77,7 +77,7 @@
 
 <style lang="scss" scoped>
 .card {
-  width: 18rem;
+  width: 10rem;
   display: inline-block;
   margin: 10px;
 }

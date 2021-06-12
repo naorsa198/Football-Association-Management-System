@@ -1,19 +1,25 @@
 <template>
     <div class="league-preview">
-      <b-card
-      img-alt="Image"
-      tag="article"
-      style="max-width: 20rem;"
-      class="mb-2"
-    >
-      <b-card-title>{{leagueName}}</b-card-title>
-      <b-card-text>
+      <div :title="leagueName" class = ".league-title">
+        <b-card-title>League Name: {{leagueName}}</b-card-title>
+      </div>
+      <ul class=".league-content">
+        <b-card-text>
         Season: {{ season }}
         <br/>
         Stage: {{ stage }}
       </b-card-text>
-      <b-button href="#" variant="primary">Go somewhere</b-button>
-    </b-card>
+      </ul>
+      <!-- <b-card
+      img-alt="Image"
+      tag="article"
+      style="max-width: 20rem;"
+      class="mb-2"
+    > -->
+     
+      
+      <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
+    <!-- </b-card> -->
   </div>
 </template>
 
@@ -32,8 +38,8 @@ export default {
 <style>
 .league-preview {
   display: inline-block;
-  width: 250px;
-  height: 200px;
+  width: 280px;
+  /* height: 200px; */
   position: relative;
   margin: 10px 10px;
   border-style: solid;
@@ -45,7 +51,7 @@ export default {
 .league-preview .league-title {
   text-align: center;
   text-transform: uppercase;
-  color:  rgb(111, 155, 197);
+  color:  rgb(111, 155, 1/97);
 }
 
 .league-preview .league-content {

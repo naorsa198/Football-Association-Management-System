@@ -6,7 +6,7 @@
       
       <b-form-input v-if="positionFlag===true" v-model="position" placeholder="Position Number">
         <b-input-group-append>
-          <b-button @click="simpleSearchPlayer()" variant="success">Search</b-button>
+          <b-button @click="filterByPosition()" variant="success">Search</b-button>
         </b-input-group-append>
       </b-form-input>
 
@@ -23,12 +23,12 @@
       </b-form-input> -->
 
       <b-input-group-append>
-        <b-button @click="simpleSearchPlayer()" variant="success">Search</b-button>
+        <b-button @click="searchTeam()" variant="success">Search</b-button>
       </b-input-group-append>
 
     </b-input-group>
 
-    <br/>
+    <br>
     Your search Query: {{searchQuery }}
     <br>
       <input type="checkbox" id="postion" value="position" v-model="checkedNames">
@@ -37,14 +37,18 @@
       <label for="john">Search Team</label>
       <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
       <label for="mike">Mike</label>
-  <br>
+    <br>
 
-<span>Checked names: {{checkedNames}}</span>
-<span v-for="res in searchResult" :key="res">
-      <PlayerPreview :propObj="res"></PlayerPreview>
-</span>
+    Checked names: {{checkedNames}}
+    <br>
+    <span v-for="res in searchResult" :key="res">
+          <TeamPreview :propObj="results"></TeamPreview>
+    </span>   
+    <span v-for="res in searchResult" :key="res">
+          <PlayerPreview :propObj="res"></PlayerPreview>
+    </span> 
 
-  <TeamPreview :propObj="results"></TeamPreview>
+      
 
 
 
@@ -62,8 +66,9 @@
 <script>
 
  import  PlayerPreview from "../components/PlayerPreview";
+ import TeamPreview from "../components/TeamPreview";
 export default {
-  components: { PlayerPreview },
+  components: { PlayerPreview, TeamPreview },
   //   props:{
   //   anObject: Object
   // },
@@ -104,19 +109,22 @@ export default {
        try {
             let check= [this.searchQuery,this.position,this.teamname]
             console.log(check);
-            const params = {
-            name:  this.searchQuery,
-            position: this.position,
-            teamname: this.teamname
+            let params = new URLSearchParams();
+            params.append("name",this.searchQuery);
+            params.append("position", this.position);
+            let req = {
+              params: params
             };
             results = await this.axios.get(
-          `http://localhost:3000/guest/Search/filyer/filter/${params.name,params.position,params.teamname}`
-          );
+          'http://localhost:3000/guest/Search/filter/player/',req);
       } catch (err) {
-        console.log("server:"+err.response);
+        console.log("server:"+err);
        
-        console.log(results);
       }
+      this.status=results.status
+      console.log(this.status);
+      console.log(results);
+      this.results= results.data
     },
 
     async searchTeam(results){
