@@ -10,17 +10,17 @@
     img-top
   >
     <template #header>
-      <h4 class="mb-0">{{propObj[0].name}}</h4>
+      <h4 class="mb-0">{{propObj.name}}</h4>
     </template>
 
 
     <b-list-group flush>
       <!-- <b-list-group-item> {{propObj}} </b-list-group-item> -->
-      <b-list-group-item> {{propObj[0].country}} </b-list-group-item>
+      <b-list-group-item> {{propObj.country}} </b-list-group-item>
       <br>
-      <b-list-group-item> {{propObj[0].continent}} </b-list-group-item>
+      <b-list-group-item> {{propObj.continent}} </b-list-group-item>
       <br>
-      <img :src="propObj[0].logo_path"/>
+      <img :src="propObj.logo_path"/>
     </b-list-group>
 
   </b-card>
