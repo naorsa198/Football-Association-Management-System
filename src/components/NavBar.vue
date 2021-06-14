@@ -16,9 +16,9 @@
         <b-navbar-nav class="ml-auto" v-else>
 
 <!-- Put profile picrure here  ---------------------------------->
-
-        <!-- <img> :src= "{{img_url}}" />  !!TODO -->
-
+      <img class="picture"
+      :src="get_image()"
+    />
         <h1 class="user" >Welecom back {{$root.store.username}} </h1>
         <b-nav-item-dropdown right>
           <template #button-content>
@@ -42,6 +42,12 @@
       img_url:""
     }
   },
+  methods:{
+    get_image(){
+      return this.$root.store.img
+    }
+  },
+
   updated(){
     if($root.store.username){
        this.img_url= $root.store.img
@@ -59,6 +65,14 @@
   text-align:left;
   position: relative;
   right:550px
+}
+
+.picture{
+       height: 70px;
+       line-height: 70px;
+       left: 550px;
+        float: left;
+
 }
 
 </style>

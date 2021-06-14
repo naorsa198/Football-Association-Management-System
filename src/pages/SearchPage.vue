@@ -46,20 +46,24 @@
 <span>Checked names: {{checkedNames}}</span>
 <!-- ----------------------------------------------- result search-------------------------- -->
 
-<h1 v-if="emptyResult"> Not Result Found  </h1>
+<h1 v-if="emptyResult"> Not Result Found For : {{searchQuery}} </h1>
 
 
 
 
 
-<div v-if="playersearch || positionFlag || filterTeamName">
+<div v-if="playersearch || positionFlag || filterTeamName ">
 
 <span  v-for="res in searchResult" :key="res">
+   <router-link to="/PlayerPage" tag="PlayerPreview"  active-class="active" 
+      class="card" >
       <PlayerPreview :propObj="res"></PlayerPreview>
+      </router-link>
+      
 </span>
 </div>
 
-<div v-if="searchTeam">
+<div v-if="teamsearch ">
 <span  v-for="res in searchResult" :key="res">
       <TeamPreview :propObj="res"></TeamPreview>
 </span>
@@ -98,7 +102,7 @@ export default {
       position:0,
       teamname:"",
       results: Object,
-      status:0
+      status:0,
     };
   },
   methods:{
@@ -115,11 +119,13 @@ export default {
           );
       } catch (err) {
         console.log("server:"+err.response);
+        this.results=[];
       }
       this.status=results.status
       console.log(this.status);
       console.log(results);
       this.results= results.data
+      console.log(this.results)
     },
 
   async filterByPosition(results){
@@ -153,8 +159,9 @@ export default {
           );
       } catch (err) {
         console.log("server:"+err.response);
+//if send error so its empty mean = not result for the user
+        this.results=[];
       }
-      this.status=results.status
       console.log(this.status);
       console.log(results);
       this.results= results.data
@@ -167,7 +174,7 @@ export default {
 
     async startSearch(){
       console.log(this.playersearch);
-       if(this.playersearch || this.positionFlag || filterTeamName){
+       if(this.playersearch || this.positionFlag || this.filterTeamName){
           if(!this.positionFlag && !this.teamFlag){
             await this.simpleSearchPlayer();
           }
@@ -183,25 +190,43 @@ export default {
 
   computed:{
       searchResult(){
-        if(this.status===200){
           if(this.results.length ===0 ){
            console.log(this.results.length);
           this.flip();
+          return [];
           }
-          return this.results
+        else {
+             return this.results
         }
-      else
-        return [];
       }
   },
 
-  beforeDestroy() {
-    localStorage.results = this.searchResult;
-  },
+  // beforeDestroy() {
+  //   this.$root.store.lastSearch(this.searchResult)
+  // },        
+
+
+  // beforeMount() {
+  //   if(this.$root.store.results != undefined){
+  //     this.startFlag=true
+  //   }
+  //   this.results = this.$root.store.results;
+  // },
 
   beforeMount() {
-    this.results= localStorage.results;
+    if(this.$root.store.results != undefined){
+          this.results = this.$root.store.results;
+          this.playersearch=this.$root.store.playersearch;
+          this.teamsearch=this.$root.store.teamsearch;
+    }
+  
   },
+
+
+  beforeRouteLeave(to ,from ,next){
+  this.$root.store.lastSearch(this.searchResult,this.playersearch,this.teamsearch)
+  next();
+  } 
 
 }
 </script>
@@ -211,5 +236,9 @@ export default {
 #search-input {
   margin-left: 20px; 
   width: 500px; 
+}
+
+.card :hover {
+cursor: pointer;
 }
 </style>

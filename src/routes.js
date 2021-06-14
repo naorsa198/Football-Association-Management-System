@@ -28,6 +28,11 @@ const routes = [
     name: "logout",
     component: () => import("./components/LogOut")
   },
+  {
+    path: "/PlayerPage",
+    name: "PlayerPage",
+    component: () => import("./pages/PlayerPage")
+  },
 
   {
     path: "*",
