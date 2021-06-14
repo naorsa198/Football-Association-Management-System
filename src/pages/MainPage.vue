@@ -11,7 +11,7 @@
     sub-title="Subtitle"
     >
     <b-card-text>
-      Some quick example text to build on the card and make up the bulk of the card's content.
+      //TODO: delete all text on image and find another league image
     </b-card-text>
   </b-card>
   <!-- table info -->
