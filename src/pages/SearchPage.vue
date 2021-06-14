@@ -64,7 +64,7 @@
 </div>
 
 <div v-if="teamsearch ">
-<span  v-for="res in searchResult" :key="res">
+<span  v-for="(res,index) in searchResultteam" :key="index">
       <TeamPreview :propObj="res"></TeamPreview>
 </span>
 </div>
@@ -102,6 +102,7 @@ export default {
       position:0,
       teamname:"",
       results: Object,
+      resultsteam: Object,
       status:0,
     };
   },
@@ -164,12 +165,15 @@ export default {
       }
       console.log(this.status);
       console.log(results);
-      this.results= results.data
+      this.resultsteam= results.data
     },
 
 
     flip(){
       this.emptyResult=true;
+    },
+    filpfalse(){
+      this.emptyResult=false;
     },
 
     async startSearch(){
@@ -196,7 +200,19 @@ export default {
           return [];
           }
         else {
+          this.filpfalse()
              return this.results
+        }
+      },
+       searchResultteam(){
+          if(this.resultsteam.length ===0 ){
+           console.log(this.resultsteam.length);
+          this.flip();
+          return [];
+          }
+        else {
+                    this.filpfalse()
+             return this.resultsteam
         }
       }
   },
@@ -219,12 +235,17 @@ export default {
           this.playersearch=this.$root.store.playersearch;
           this.teamsearch=this.$root.store.teamsearch;
     }
+    if(this.$root.store.resultsteam != undefined){
+          this.resultsteam = this.$root.store.resultsteam;
+          this.playersearch=this.$root.store.playersearch;
+          this.teamsearch=this.$root.store.teamsearch;
+    }
   
   },
 
 
   beforeRouteLeave(to ,from ,next){
-  this.$root.store.lastSearch(this.searchResult,this.playersearch,this.teamsearch)
+  this.$root.store.lastSearch(this.searchResult,this.searchResultteam,this.playersearch,this.teamsearch)
   next();
   } 
 

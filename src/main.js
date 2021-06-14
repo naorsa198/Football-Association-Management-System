@@ -72,8 +72,10 @@ const shared_data = {
   username: localStorage.username,
   img: localStorage.img,
   results: localStorage.results,
+  resultsteam: localStorage.resultsteam,
   playersearch: localStorage.playersearch,
   teamsearch: localStorage.teamsearch,
+
   
   // username: "hilla",
   login(username,img) {
@@ -84,11 +86,13 @@ const shared_data = {
     this.img = img;
     console.log("login", this.img);
   },
-  lastSearch(results,playersearch,teamsearch){
-    localStorage.setItem("results",results);
+  lastSearch(results,resultsteam ,playersearch,teamsearch){
+    localStorage.setItem("results",results)
+    localStorage.setItem("resultsteam",resultsteam)
     localStorage.setItem("playersearch", playersearch)
     localStorage.setItem("teamsearch",teamsearch)
     this.results = results;
+    this.resultsteam= resultsteam;
     this.teamsearch = teamsearch;
     this.playersearch= playersearch;
     console.log("lastsearch",this.results)
@@ -101,12 +105,14 @@ const shared_data = {
     localStorage.removeItem("results");
     localStorage.removeItem("playersearch")
     localStorage.removeItem("teamsearch")
+    localStorage.removeItem("resultsteam")
 
     this.username = undefined;
     this.img = undefined;
     this.results = undefined;
     this.teamsearch = false;
     this.playersearch=false;
+    this.resultsteam= undefined;
   }
 };
 console.log(shared_data);

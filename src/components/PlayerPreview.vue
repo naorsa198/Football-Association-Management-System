@@ -62,7 +62,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style >
 .card {
   width: 18rem;
   display: inline-block;
