@@ -56,7 +56,7 @@
 
 <span  v-for="res in searchResult" :key="res">
    <router-link to="/PlayerPage" tag="PlayerPreview"  active-class="active" 
-      class="card" >
+      class="card"  @click.native = PlayerDetail(res) >
       <PlayerPreview :propObj="res"></PlayerPreview>
       </router-link>
       
@@ -65,7 +65,12 @@
 
 <div v-if="teamsearch ">
 <span  v-for="(res,index) in searchResultteam" :key="index">
-      <TeamPreview :propObj="res"></TeamPreview>
+<router-link to="/TeamPage" tag="TeamPreview"  active-class="active" 
+      class="card"  @click.native = TeamDetail(res) >
+
+<TeamPreview :propObj="res"></TeamPreview>
+</router-link>
+
 </span>
 </div>
 
@@ -174,6 +179,12 @@ export default {
     },
     filpfalse(){
       this.emptyResult=false;
+    },
+    PlayerDetail(res){
+    this.$root.store.toPlayerPage(res);
+    },
+    TeamDetail(res){
+    this.$root.store.toTeamPage(res);
     },
 
     async startSearch(){

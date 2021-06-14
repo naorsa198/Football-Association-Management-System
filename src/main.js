@@ -75,6 +75,8 @@ const shared_data = {
   resultsteam: localStorage.resultsteam,
   playersearch: localStorage.playersearch,
   teamsearch: localStorage.teamsearch,
+  playerdetail: localStorage.gamedetail,
+  teamdetail: localStorage.teamdetail,
 
   
   // username: "hilla",
@@ -98,6 +100,14 @@ const shared_data = {
     console.log("lastsearch",this.results)
 
   },
+  toPlayerPage(playerdetail){
+    localStorage.setItem("playerdetail",playerdetail)
+    this.playerdetail = playerdetail;
+  },
+  toTeamPage(teamdetail){
+    localStorage.setItem("teamdetail",teamdetail)
+    this.teamdetail = teamdetail;
+  },
   logout() {
     console.log("logout");
     localStorage.removeItem("username");
@@ -106,6 +116,9 @@ const shared_data = {
     localStorage.removeItem("playersearch")
     localStorage.removeItem("teamsearch")
     localStorage.removeItem("resultsteam")
+    localStorage.removeItem("PlayerDetail")
+    localStorage.removeItem("teamdetail")
+
 
     this.username = undefined;
     this.img = undefined;
@@ -113,6 +126,9 @@ const shared_data = {
     this.teamsearch = false;
     this.playersearch=false;
     this.resultsteam= undefined;
+    this.gamedetail= undefined;
+    this.teamdetail=undefined;
+    this.playerdetail= undefined;
   }
 };
 console.log(shared_data);
