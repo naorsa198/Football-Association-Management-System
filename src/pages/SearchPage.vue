@@ -3,27 +3,23 @@
     <h1 class="title">Search Page</h1>
     <b-input-group prepend="Search Query:" id="search-input">
       <b-form-input v-model="searchQuery"></b-form-input>
-      
+        
       <b-form-input v-if="positionFlag===true" v-model="position" placeholder="Position Number">
         <b-input-group-append>
-          <b-button @click="filterByPosition()" variant="success">Search</b-button>
+          <b-button @click="startSearch()" variant="success">Search</b-button>
         </b-input-group-append>
       </b-form-input>
 
-      <!-- <b-form-input v-else-if="searchTeamFlag===true">
+      <b-form-input v-if="filterTeamName===true" v-model="teamName" placeholder="teamname">
         <b-input-group-append>
-          <b-button @click="searchTeam()" variant="success">Search</b-button>
+          <b-button @click="startSearch()" variant="success">Search</b-button>
         </b-input-group-append>
       </b-form-input>
 
-      <b-form-input v-else>
-        <b-input-group-append>
-          <b-button @click="simpleSearchPlayer()" variant="success">Search</b-button>
-        </b-input-group-append>
-      </b-form-input> -->
 
+      
       <b-input-group-append>
-        <b-button @click="searchTeam()" variant="success">Search</b-button>
+        <b-button @click="startSearch()" variant="success">Search</b-button>
       </b-input-group-append>
 
     </b-input-group>
@@ -31,32 +27,41 @@
     <br>
     Your search Query: {{searchQuery }}
     <br>
-      <input type="checkbox" id="postion" value="position" v-model="checkedNames">
+      <!-- <input type="checkbox" id="postion" value="position" v-model="checkedNames">
       <label for="jack">Filter By position</label>
-      <input type="checkbox" id="team" value="Team" v-model="checkedNames">
-      <label for="john">Search Team</label>
-      <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
-      <label for="mike">Mike</label>
-    <br>
+      <input type="checkbox" id="team" value="Team" v-model="checkedNames"> -->
+      <input  v-if="!teamsearch && !positionFlag  && !filterTeamName" type="checkbox" id="player" value="player" v-model="playersearch">
+     <label v-if="!teamsearch" for="jack">Search player__</label>
 
-    Checked names: {{checkedNames}}
-    <br>
-    <span v-for="res in searchResult" :key="res">
-          <TeamPreview :propObj="results"></TeamPreview>
-    </span>   
-    <span v-for="res in searchResult" :key="res">
-          <PlayerPreview :propObj="res"></PlayerPreview>
-    </span> 
-
+      <input v-if="!playersearch && !positionFlag && !filterTeamName" type="checkbox" id="team" value="team" v-model="teamsearch" >
+      <label  v-if="!playersearch && !positionFlag  && !filterTeamName" for="john">Search Team__</label>
       
+      <input  v-if="!teamsearch" type="checkbox" id="postion" value="position" v-model="positionFlag">
+      <label v-if="!teamsearch" for="jack">Filter By position__</label>
 
+       <input  v-if="!teamsearch" type="checkbox" id="filterTeamName" value="filterTeamName" v-model="filterTeamName">
+      <label v-if="!teamsearch" for="jack">Filter By Team Name__</label>
+            
+     
+  <br>
 
+<span>Checked names: {{checkedNames}}</span>
+<!-- ----------------------------------------------- result search-------------------------- -->
 
-  <!-- <h2>Search Results</h2>
-    <span v-if( status != 0 ) v-for="res in result.data" :key="res.position">
-      <pokemon-preview :position="res.position"></pokemon-preview>
-      <PlayerPreview></PlayerPreview> 
-   </span> -->
+<div v-if="playersearch || positionFlag || filterTeamName">
+
+<span  v-for="res in searchResult" :key="res">
+      <PlayerPreview :propObj="res"></PlayerPreview>
+</span>
+</div>
+
+<div v-if="searchTeam">
+<span  v-for="res in searchResult" :key="res">
+      <TeamPreview :propObj="res"></TeamPreview>
+</span>
+</div>
+
+  <!-- <TeamPreview :propObj="results"></TeamPreview> -->
 
   </div>
 
@@ -66,9 +71,10 @@
 <script>
 
  import  PlayerPreview from "../components/PlayerPreview";
- import TeamPreview from "../components/TeamPreview";
+import  TeamPreview from "../components/TeamPreview";
+
 export default {
-  components: { PlayerPreview, TeamPreview },
+  components: { PlayerPreview,TeamPreview },
   //   props:{
   //   anObject: Object
   // },
@@ -77,7 +83,11 @@ export default {
       searchQuery:"",
       checkedNames:[],
       positionFlag: false,
+      playersearch: false,
+      teamFlag: false,
+      teamsearch: false,
       searchTeamFlag:false,
+      filterTeamName: false,
       position:0,
       teamname:"",
       results: Object,
@@ -101,7 +111,7 @@ export default {
       }
       this.status=results.status
       console.log(this.status);
-      console.log(results);
+      console.log(results.data);
       this.results= results.data
     },
 
@@ -109,14 +119,13 @@ export default {
        try {
             let check= [this.searchQuery,this.position,this.teamname]
             console.log(check);
-            let params = new URLSearchParams();
-            params.append("name",this.searchQuery);
-            params.append("position", this.position);
-            let req = {
-              params: params
-            };
+            let params ={
+              "name": this.searchQuery,
+              "position": this.position,
+              "teamname": this.teamname
+            }
             results = await this.axios.get(
-          'http://localhost:3000/guest/Search/filter/player/',req);
+          `http://localhost:3000/guest/Search/filter/player/${params}`);
       } catch (err) {
         console.log("server:"+err);
        
@@ -142,18 +151,28 @@ export default {
       }
       this.status=results.status
       console.log(this.status);
-      console.log(results);
+      console.log(results.data);
       this.results= results.data
     },
 
 
     async startSearch(){
-      await this.filterByPosition(this.results);
+      console.log("start search")
+      console.log(this.playersearch);
+      if(this.playersearch){
+          if(!this.positionFlag && !this.teamFlag){
+            await this.simpleSearchPlayer();
+          }
+          else{
+              ( await this.filterByPosition());  
+          }
+       }
+      else if(this.searchTeam){
+          await this.searchTeam();
+        }
+       }
     },
 
-
-
-  },
   computed:{
       searchResult(){
         if(this.status===200){
@@ -161,12 +180,15 @@ export default {
         }
       else return [];
   }},
-  updated() {
-    if (this.checkedNames.find( element => element === "position")){
-        this.positionFlag=true;
-      }
-    else this.positionFlag=false;
-    }
+
+  beforeDestroy() {
+    localStorage.results = this.searchResult;
+  },
+
+  beforeMount() {
+    this.results= localStorage.results;
+  },
+
 }
 </script>
 
