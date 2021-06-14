@@ -47,7 +47,6 @@
           result:undefined,
       }
       },
-
     methods: {
     get_image() {
         if(this.propObj.logo_path != undefined){
@@ -55,7 +54,6 @@
         }
         else return "'https://cdn.sportmonks.com/images/soccer/placeholder.png"
     },
-
     async getTeamFullDetails(){ 
         this.teamid=this.propObj.id;
          try {
@@ -71,26 +69,15 @@
       console.log(result);
       this.resultsteam= result.data
     }
-
     },
-
      
-
-
     mounted() {
       this.propObj=this.$root.store.teamdetail;
     this.getTeamFullDetails(this.result)
-
       
     },
-
-
-
   }
-
-
 </script>
 
 <style lang="scss" scoped>
-
 </style>
