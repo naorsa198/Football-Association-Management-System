@@ -24,21 +24,23 @@
 
     </b-input-group>
 
-    <br/>
+    <br>
     Your search Query: {{searchQuery }}
     <br>
-
-     <input  v-if="!teamsearch && !positionFlag  && !filterTeamName" type="checkbox" id="player" value="player" v-model="playersearch">
+      <!-- <input type="checkbox" id="postion" value="position" v-model="checkedNames">
+      <label for="jack">Filter By position</label>
+      <input type="checkbox" id="team" value="Team" v-model="checkedNames"> -->
+      <input  v-if="!teamsearch && !positionFlag  && !filterTeamName" type="checkbox" id="player" value="player" v-model="playersearch">
      <label v-if="!teamsearch" for="jack">Search player__</label>
-        
+
       <input v-if="!playersearch && !positionFlag && !filterTeamName" type="checkbox" id="team" value="team" v-model="teamsearch" >
-      <label  v-if="!playersearch && !positionFlag  && !filterTeamName" for="john">Search Team</label>
+      <label  v-if="!playersearch && !positionFlag  && !filterTeamName" for="john">Search Team__</label>
       
       <input  v-if="!teamsearch" type="checkbox" id="postion" value="position" v-model="positionFlag">
       <label v-if="!teamsearch" for="jack">Filter By position__</label>
 
        <input  v-if="!teamsearch" type="checkbox" id="filterTeamName" value="filterTeamName" v-model="filterTeamName">
-      <label v-if="!teamsearch" for="jack">Filter By Team Name</label>
+      <label v-if="!teamsearch" for="jack">Filter By Team Name__</label>
             
      
   <br>
@@ -59,9 +61,7 @@
 </span>
 </div>
 
-
   <!-- <TeamPreview :propObj="results"></TeamPreview> -->
-
 
   </div>
 
@@ -111,7 +111,7 @@ export default {
       }
       this.status=results.status
       console.log(this.status);
-      console.log(results);
+      console.log(results.data);
       this.results= results.data
     },
 
@@ -119,19 +119,21 @@ export default {
        try {
             let check= [this.searchQuery,this.position,this.teamname]
             console.log(check);
-            const params = {
-            name:  this.searchQuery,
-            position: this.position,
-            teamname: this.teamname
-            };
+            let params ={
+              "name": this.searchQuery,
+              "position": this.position,
+              "teamname": this.teamname
+            }
             results = await this.axios.get(
-          `http://localhost:3000/guest/Search/filyer/filter/${params.name,params.position,params.teamname}`
-          );
+          `http://localhost:3000/guest/Search/filter/player/${params}`);
       } catch (err) {
-        console.log("server:"+err.response);
+        console.log("server:"+err);
        
-        console.log(results);
       }
+      this.status=results.status
+      console.log(this.status);
+      console.log(results);
+      this.results= results.data
     },
 
     async searchTeam(results){
@@ -149,14 +151,15 @@ export default {
       }
       this.status=results.status
       console.log(this.status);
-      console.log(results);
+      console.log(results.data);
       this.results= results.data
     },
 
 
     async startSearch(){
+      console.log("start search")
       console.log(this.playersearch);
-       if(this.playersearch){
+      if(this.playersearch){
           if(!this.positionFlag && !this.teamFlag){
             await this.simpleSearchPlayer();
           }
@@ -164,7 +167,7 @@ export default {
               ( await this.filterByPosition());  
           }
        }
-        else if(this.searchTeam){
+      else if(this.searchTeam){
           await this.searchTeam();
         }
        }

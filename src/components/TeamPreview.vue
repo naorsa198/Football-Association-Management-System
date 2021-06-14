@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card">
 
   <b-card
 
@@ -40,5 +40,10 @@
 </script>
 
 <style lang="scss" scoped>
+.card {
+  width: 10rem;
+  display: inline-block;
+  margin: 20px;
+}
 
 </style>
