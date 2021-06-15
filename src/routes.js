@@ -36,7 +36,7 @@ const routes = [
 {
   path: "/TeamPage",
   name: "TeamPage",
-  component: () => import("./pages/TeamPage")
+  component: () => import("./pages/TeamPage2")
 },
 
   {
