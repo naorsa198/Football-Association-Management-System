@@ -54,6 +54,7 @@ export default {
   border-radius: 10px;
   border-width: 5px;
   border-color:cadetblue;
+  background: rgba(255, 253, 221, 0.6);
 }
 
 .game-preview .game-title {

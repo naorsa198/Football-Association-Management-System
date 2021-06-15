@@ -46,6 +46,9 @@ export default {
   border-radius: 10px;
   border-width: 5px;
   border-color:rgb(44, 89, 116);
+  background: rgba(255, 253, 221, 0.6);
+  /* background-color: beige; */
+  /* opacity:0.5  ; */
 }
 
 .league-preview .league-title {
