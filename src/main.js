@@ -110,7 +110,7 @@ const shared_data = {
   },
   logout() {
     console.log("logout");
-    localStorage.removeItem("username");
+    localStorage.removeItem(this.username);
     localStorage.removeItem("img");
     localStorage.removeItem("results");
     localStorage.removeItem("playersearch")
