@@ -71,6 +71,13 @@ Vue.config.productionTip = false;
 const shared_data = {
   username: localStorage.username,
   img: localStorage.img,
+  results: localStorage.results,
+  resultsteam: localStorage.resultsteam,
+  playersearch: localStorage.playersearch,
+  teamsearch: localStorage.teamsearch,
+  playerdetail: localStorage.gamedetail,
+  teamdetail: localStorage.teamdetail,
+
   
   // username: "hilla",
   login(username,img) {
@@ -81,13 +88,47 @@ const shared_data = {
     this.img = img;
     console.log("login", this.img);
   },
+  lastSearch(results,resultsteam ,playersearch,teamsearch){
+    localStorage.setItem("results",results)
+    localStorage.setItem("resultsteam",resultsteam)
+    localStorage.setItem("playersearch", playersearch)
+    localStorage.setItem("teamsearch",teamsearch)
+    this.results = results;
+    this.resultsteam= resultsteam;
+    this.teamsearch = teamsearch;
+    this.playersearch= playersearch;
+    console.log("lastsearch",this.results)
+
+  },
+  toPlayerPage(playerdetail){
+    localStorage.setItem("playerdetail",playerdetail)
+    this.playerdetail = playerdetail;
+  },
+  toTeamPage(teamdetail){
+    localStorage.setItem("teamdetail",teamdetail)
+    this.teamdetail = teamdetail;
+  },
   logout() {
     console.log("logout");
     localStorage.removeItem(this.username);
     localStorage.removeItem("img");
+    localStorage.removeItem("results");
+    localStorage.removeItem("playersearch")
+    localStorage.removeItem("teamsearch")
+    localStorage.removeItem("resultsteam")
+    localStorage.removeItem("PlayerDetail")
+    localStorage.removeItem("teamdetail")
+
 
     this.username = undefined;
     this.img = undefined;
+    this.results = undefined;
+    this.teamsearch = false;
+    this.playersearch=false;
+    this.resultsteam= undefined;
+    this.gamedetail= undefined;
+    this.teamdetail=undefined;
+    this.playerdetail= undefined;
   }
 };
 console.log(shared_data);
