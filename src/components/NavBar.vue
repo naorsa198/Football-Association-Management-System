@@ -5,9 +5,9 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
 
-        <b-nav-item :to="{ name: 'search' }"  tag ="a" active-class="active" class="nav-link">Search</b-nav-item>
-        <b-nav-item :to="{ name: 'seasonGames' }"  tag ="a" active-class="active" class="nav-link">Current Season Games</b-nav-item>
-        <b-nav-item :to="{ name: 'about' }"  tag ="a" active-class="active" class="nav-link">About</b-nav-item>
+        <b-nav-item :to="{ name: 'search' }"  tag ="a" active-class="active" class="nav-link" exact>Search</b-nav-item>
+        <b-nav-item :to="{ name: 'seasonGames' }"  tag ="a" active-class="active" class="nav-link" exact>Current Season Games</b-nav-item>
+        <b-nav-item :to="{ name: 'about' }"  tag ="a" active-class="active" class="nav-link" exact>About</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
@@ -19,9 +19,9 @@
         <b-navbar-nav class="ml-auto" v-else>
 
 <!-- Put profile picrure here  ---------------------------------->
-
-        <!-- <img> :src= "{{img_url}}" />  !!TODO -->
-
+      <img class="picture"
+      :src="get_image()"
+    />
         <h1 class="user" >Welecom back {{$root.store.username}} </h1>
         <b-nav-item-dropdown text="Personal" right>
           <template #button-content>
@@ -45,6 +45,12 @@
       img_url:""
     }
   },
+  methods:{
+    get_image(){
+      return this.$root.store.img
+    }
+  },
+
   updated(){
     if($root.store.username){
        this.img_url= $root.store.img
@@ -61,6 +67,14 @@
   color: rgb(255, 255, 255);
   text-align:center;
   position: inherit;
+}
+
+.picture{
+       height: 70px;
+       line-height: 70px;
+       left: 550px;
+        float: left;
+
 }
 
 </style>

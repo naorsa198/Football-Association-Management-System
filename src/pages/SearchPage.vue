@@ -24,23 +24,21 @@
 
     </b-input-group>
 
-    <br>
+    <br/>
     Your search Query: {{searchQuery }}
     <br>
-      <!-- <input type="checkbox" id="postion" value="position" v-model="checkedNames">
-      <label for="jack">Filter By position</label>
-      <input type="checkbox" id="team" value="Team" v-model="checkedNames"> -->
-      <input  v-if="!teamsearch && !positionFlag  && !filterTeamName" type="checkbox" id="player" value="player" v-model="playersearch">
-     <label v-if="!teamsearch" for="jack">Search player__</label>
 
+     <input  v-if="!teamsearch && !positionFlag  && !filterTeamName" type="checkbox" id="player" value="player" v-model="playersearch">
+     <label v-if="!teamsearch" for="jack">Search player__</label>
+        
       <input v-if="!playersearch && !positionFlag && !filterTeamName" type="checkbox" id="team" value="team" v-model="teamsearch" >
-      <label  v-if="!playersearch && !positionFlag  && !filterTeamName" for="john">Search Team__</label>
+      <label  v-if="!playersearch && !positionFlag  && !filterTeamName" for="john">Search Team</label>
       
       <input  v-if="!teamsearch" type="checkbox" id="postion" value="position" v-model="positionFlag">
       <label v-if="!teamsearch" for="jack">Filter By position__</label>
 
        <input  v-if="!teamsearch" type="checkbox" id="filterTeamName" value="filterTeamName" v-model="filterTeamName">
-      <label v-if="!teamsearch" for="jack">Filter By Team Name__</label>
+      <label v-if="!teamsearch" for="jack">Filter By Team Name</label>
             
      
   <br>
@@ -48,20 +46,37 @@
 <span>Checked names: {{checkedNames}}</span>
 <!-- ----------------------------------------------- result search-------------------------- -->
 
-<div v-if="playersearch || positionFlag || filterTeamName">
+<h1 v-if="emptyResult"> Not Result Found For : {{searchword}} </h1>
+
+
+
+
+
+<div v-if="playersearch || positionFlag || filterTeamName ">
 
 <span  v-for="res in searchResult" :key="res">
+   <router-link to="/PlayerPage" tag="PlayerPreview"  active-class="active" 
+      class="card"  @click.native = PlayerDetail(res) >
       <PlayerPreview :propObj="res"></PlayerPreview>
+      </router-link>
+      
 </span>
 </div>
 
-<div v-if="searchTeam">
-<span  v-for="res in searchResult" :key="res">
-      <TeamPreview :propObj="res"></TeamPreview>
+<div v-if="teamsearch ">
+<span  v-for="(res,index) in searchResultteam" :key="index">
+<router-link to="/TeamPage" tag="TeamPreview"  active-class="active" 
+      class="card"  @click.native = TeamDetail(res) >
+
+<TeamPreview :propObj="res"></TeamPreview>
+</router-link>
+
 </span>
 </div>
+
 
   <!-- <TeamPreview :propObj="results"></TeamPreview> -->
+
 
   </div>
 
@@ -88,10 +103,13 @@ export default {
       teamsearch: false,
       searchTeamFlag:false,
       filterTeamName: false,
+      emptyResult: false,
       position:0,
       teamname:"",
       results: Object,
-      status:0
+      resultsteam: Object,
+      status:0,
+      searchword:"",
     };
   },
   methods:{
@@ -108,32 +126,44 @@ export default {
           );
       } catch (err) {
         console.log("server:"+err.response);
+        this.flip();
       }
       this.status=results.status
       console.log(this.status);
-      console.log(results.data);
+      console.log(results);
       this.results= results.data
+      console.log(this.results)
+      if(this.results==0){
+        this.flip();
+        console.log(this.emptyResult);
+      }  
     },
 
   async filterByPosition(results){
        try {
             let check= [this.searchQuery,this.position,this.teamname]
             console.log(check);
-            let params ={
-              "name": this.searchQuery,
-              "position": this.position,
-              "teamname": this.teamname
-            }
+            const params = {
+            name:  this.searchQuery,
+            position: this.position,
+            teamname: this.teamname
+            };
             results = await this.axios.get(
-          `http://localhost:3000/guest/Search/filter/player/${params}`);
+          `http://localhost:3000/guest/Search/filter/player/name,${params.name},position,${params.position},teamname,${params.teamname}`
+
+          );
       } catch (err) {
-        console.log("server:"+err);
-       
+        console.log("server:"+err.response);
       }
-      this.status=results.status
+       this.status=results.status
       console.log(this.status);
       console.log(results);
       this.results= results.data
+      console.log(this.results)
+      if(this.results==0){
+        this.flip();
+        console.log(this.emptyResult);
+      }  
     },
 
     async searchTeam(results){
@@ -148,18 +178,39 @@ export default {
           );
       } catch (err) {
         console.log("server:"+err.response);
+//if send error so its empty mean = not result for the user
+        this.emptyResult=true;
       }
-      this.status=results.status
-      console.log(this.status);
-      console.log(results.data);
-      this.results= results.data
+      try{
+      this.resultsteam= results.data
+      if(this.resultsteam==0){
+        this.flip();
+        console.log(this.emptyResult);
+      }
+      }catch (err){
+        this.emptyResult=true;
+        console.log(this.emptyResult);
+      }
     },
 
 
+    flip(){
+      this.emptyResult=true;
+    },
+    filpfalse(){
+      this.emptyResult=false;
+    },
+    PlayerDetail(res){
+    this.$root.store.toPlayerPage(res);
+    },
+    TeamDetail(res){
+    this.$root.store.toTeamPage(res);
+    },
+
     async startSearch(){
-      console.log("start search")
+      this.searchword=this.searchQuery;
       console.log(this.playersearch);
-      if(this.playersearch){
+       if(this.playersearch || this.positionFlag || this.filterTeamName){
           if(!this.positionFlag && !this.teamFlag){
             await this.simpleSearchPlayer();
           }
@@ -167,7 +218,7 @@ export default {
               ( await this.filterByPosition());  
           }
        }
-      else if(this.searchTeam){
+        else if(this.searchTeam){
           await this.searchTeam();
         }
        }
@@ -175,19 +226,61 @@ export default {
 
   computed:{
       searchResult(){
-        if(this.status===200){
-          return this.results
+          if(this.results.length ===0 ){
+           console.log(this.results.length);
+          this.flip();
+          return [];
+          }
+        else {
+          this.filpfalse()
+             return this.results
         }
-      else return [];
-  }},
-
-  beforeDestroy() {
-    localStorage.results = this.searchResult;
+      },
+       searchResultteam(){
+          if(this.resultsteam.length ===0 ){
+           console.log(this.resultsteam.length);
+          this.flip();
+          return [];
+          }
+        else {
+                    this.filpfalse()
+             return this.resultsteam
+        }
+      }
   },
+
+  // beforeDestroy() {
+  //   this.$root.store.lastSearch(this.searchResult)
+  // },        
+
+
+  // beforeMount() {
+  //   if(this.$root.store.results != undefined){
+  //     this.startFlag=true
+  //   }
+  //   this.results = this.$root.store.results;
+  // },
 
   beforeMount() {
-    this.results= localStorage.results;
+    if(this.$root.store.results != undefined){
+          this.results = this.$root.store.results;
+          this.playersearch=this.$root.store.playersearch;
+          this.teamsearch=this.$root.store.teamsearch;
+    }
+    if(this.$root.store.resultsteam != undefined){
+          this.resultsteam = this.$root.store.resultsteam;
+          this.playersearch=this.$root.store.playersearch;
+          this.teamsearch=this.$root.store.teamsearch;
+    }
+  
   },
+
+ 
+
+  beforeRouteLeave(to ,from ,next){
+  this.$root.store.lastSearch(this.searchResult,this.searchResultteam,this.playersearch,this.teamsearch)
+  next();
+  } 
 
 }
 </script>
@@ -197,5 +290,9 @@ export default {
 #search-input {
   margin-left: 20px; 
   width: 500px; 
+}
+
+.card :hover {
+cursor: pointer;
 }
 </style>
