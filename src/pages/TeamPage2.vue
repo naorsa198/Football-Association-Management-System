@@ -146,6 +146,7 @@
 <style>
 .card{
   display: inline-block;
+  background: red;
 }
 
 </style>

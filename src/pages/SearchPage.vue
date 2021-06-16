@@ -149,13 +149,21 @@ export default {
             teamname: this.teamname
             };
             results = await this.axios.get(
-          `http://localhost:3000/guest/Search/filyer/filter/${params.name,params.position,params.teamname}`
+          `http://localhost:3000/guest/Search/filter/player/name,${params.name},position,${params.position},teamname,${params.teamname}`
+
           );
       } catch (err) {
         console.log("server:"+err.response);
-       
-        console.log(results);
       }
+       this.status=results.status
+      console.log(this.status);
+      console.log(results);
+      this.results= results.data
+      console.log(this.results)
+      if(this.results==0){
+        this.flip();
+        console.log(this.emptyResult);
+      }  
     },
 
     async searchTeam(results){
