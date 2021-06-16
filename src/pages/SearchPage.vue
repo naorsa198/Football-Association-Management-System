@@ -46,7 +46,7 @@
 <span>Checked names: {{checkedNames}}</span>
 <!-- ----------------------------------------------- result search-------------------------- -->
 
-<h1 v-if="emptyResult"> Not Result Found For : {{searchQuery}} </h1>
+<h1 v-if="emptyResult"> Not Result Found For : {{searchword}} </h1>
 
 
 
@@ -109,6 +109,7 @@ export default {
       results: Object,
       resultsteam: Object,
       status:0,
+      searchword:"",
     };
   },
   methods:{
@@ -125,13 +126,17 @@ export default {
           );
       } catch (err) {
         console.log("server:"+err.response);
-        this.results=[];
+        this.flip();
       }
       this.status=results.status
       console.log(this.status);
       console.log(results);
       this.results= results.data
       console.log(this.results)
+      if(this.results==0){
+        this.flip();
+        console.log(this.emptyResult);
+      }  
     },
 
   async filterByPosition(results){
@@ -166,11 +171,18 @@ export default {
       } catch (err) {
         console.log("server:"+err.response);
 //if send error so its empty mean = not result for the user
-        this.results=[];
+        this.emptyResult=true;
       }
-      console.log(this.status);
-      console.log(results);
+      try{
       this.resultsteam= results.data
+      if(this.resultsteam==0){
+        this.flip();
+        console.log(this.emptyResult);
+      }
+      }catch (err){
+        this.emptyResult=true;
+        console.log(this.emptyResult);
+      }
     },
 
 
@@ -188,6 +200,7 @@ export default {
     },
 
     async startSearch(){
+      this.searchword=this.searchQuery;
       console.log(this.playersearch);
        if(this.playersearch || this.positionFlag || this.filterTeamName){
           if(!this.positionFlag && !this.teamFlag){
@@ -254,6 +267,7 @@ export default {
   
   },
 
+ 
 
   beforeRouteLeave(to ,from ,next){
   this.$root.store.lastSearch(this.searchResult,this.searchResultteam,this.playersearch,this.teamsearch)

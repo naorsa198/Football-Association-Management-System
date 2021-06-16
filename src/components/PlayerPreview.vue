@@ -15,7 +15,7 @@
 
 
     <b-list-group flush>
-      <b-list-group-item> {{propObj.position}} </b-list-group-item>
+      <b-list-group-item> {{propObj.position}} - {{$root.positionKey[propObj.position]}} </b-list-group-item>
       <br>
       <b-list-group-item> {{propObj.team_name}} </b-list-group-item>
       <br>
@@ -68,4 +68,8 @@
   display: inline-block;
   margin: 10px;
 }
+ 
+ .card:hover{
+cursor: pointer;
+ }
 </style>

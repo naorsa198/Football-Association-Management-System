@@ -4,7 +4,7 @@
   <b-card
 
     no-body
-    style="max-width: 20rem;"
+    style="max-width: 200rem;"
 
     img-alt="Image"
     img-top
@@ -15,24 +15,24 @@
 
 
     <b-list-group flush>
-      <b-list-group-item> {{propObj.position}} </b-list-group-item>
+      <b-list-group-item>Position: {{propObj.position}}-{{$root.positionKey[propObj.position]}} </b-list-group-item>
       <br>
-      <b-list-group-item> {{propObj.team_name}} </b-list-group-item>
+      <b-list-group-item>Team Name: {{propObj.team_name}} </b-list-group-item>
       <br>
       <img :src="get_image()" />
       <br>
       <!-- *********** NEW ******************************** -->
-      <b-list-group-item> {{propObj.CommonName}} </b-list-group-item> -->
+      <b-list-group-item>CommonName: {{propObj.CommonName}} </b-list-group-item> 
       <br>
-      <b-list-group-item> {{propObj.nationality}} </b-list-group-item>
+      <b-list-group-item>nationality: {{propObj.nationality}} </b-list-group-item>
       <br>
-      <b-list-group-item> {{propObj.birthdate}} </b-list-group-item>
+      <b-list-group-item>birthdate: {{propObj.birthdate}} </b-list-group-item>
       <br>
-      <b-list-group-item> {{propObj.birthcountry}} </b-list-group-item>
+      <b-list-group-item>birthcountry: {{propObj.birthcountry}} </b-list-group-item>
       <br>
-      <b-list-group-item> {{propObj.height}} </b-list-group-item>
+      <b-list-group-item>height: {{propObj.height}} </b-list-group-item>
       <br>
-      <b-list-group-item> {{propObj.weight}} </b-list-group-item> -->
+      <b-list-group-item>weight: {{propObj.weight}} </b-list-group-item> 
       
 
 
@@ -70,5 +70,14 @@
 </script>
 
 <style lang="scss" scoped>
+.card{
+  
+  height: 80rem;
+  width: 80rem;
+}
+
+.mb-0{
+  color: blue;
+}
 
 </style>

@@ -5,9 +5,9 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
 
-        <b-nav-item :to="{ name: 'search' }"  tag ="a" active-class="active" class="nav-link">Search</b-nav-item>
-        <b-nav-item :to="{ name: 'seasonGames' }"  tag ="a" active-class="active" class="nav-link">Current Season Games</b-nav-item>
-        <b-nav-item :to="{ name: 'about' }"  tag ="a" active-class="active" class="nav-link">About</b-nav-item>
+        <b-nav-item :to="{ name: 'search' }"  tag ="a" active-class="active" class="nav-link" exact>Search</b-nav-item>
+        <b-nav-item :to="{ name: 'seasonGames' }"  tag ="a" active-class="active" class="nav-link" exact>Current Season Games</b-nav-item>
+        <b-nav-item :to="{ name: 'about' }"  tag ="a" active-class="active" class="nav-link" exact>About</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="!$root.store.username">

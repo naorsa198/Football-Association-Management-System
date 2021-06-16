@@ -21,8 +21,13 @@ export default {
         this.$forceUpdate();
       });
     }
-  }
+  },
+  created() {
+  this.$root.store.logout();
+}
 };
+
+
 </script>
 
 <style lang="scss">

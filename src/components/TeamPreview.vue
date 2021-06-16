@@ -45,5 +45,8 @@
   display: inline-block;
   margin: 20px;
 }
+.card:hover{
+  cursor: pointer;
+}
 
 </style>
