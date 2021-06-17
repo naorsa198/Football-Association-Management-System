@@ -33,11 +33,21 @@ const routes = [
     name: "PlayerPage",
     component: () => import("./pages/PlayerPage")
   },
-{
-  path: "/TeamPage",
-  name: "TeamPage",
-  component: () => import("./pages/TeamPage2")
-},
+  {
+    path: "/TeamPage",
+    name: "TeamPage",
+    component: () => import("./pages/TeamPage2")
+  },
+  {
+    path: "/currSeasonGames",
+    name: "currSeasonGames",
+    component: () => import("./pages/SeasonGamesPage")
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: () => import("./pages/AboutPage")
+  },
 
   {
     path: "*",

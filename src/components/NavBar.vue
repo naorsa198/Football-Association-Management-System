@@ -1,28 +1,27 @@
 <template>
     <div>
    <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand :to="{ name: 'main' }" tag ="a" active-class="active" class="nav-link" exact>Superliga-Main page</b-navbar-brand>
+      <b-navbar-brand :to="{ name: 'main' }" tag ="a" active-class="active" class="nav-link-main" exact>Superliga-Main page</b-navbar-brand>
+      
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
+      <b-navbar-nav>
+          <b-nav-item :to="{ name: 'search' }"  tag ="a" active-class="active" class="nav-link" exact>Search</b-nav-item>
+          <b-nav-item :to="{ name: 'currSeasonGames' }"  tag ="a" active-class="active" class="nav-link" exact>Current Season Games</b-nav-item>
+          <b-nav-item :to="{ name: 'about' }"  tag ="a" active-class="active" class="nav-link" exact>About</b-nav-item>
+      </b-navbar-nav>
 
-        <b-nav-item :to="{ name: 'search' }"  tag ="a" active-class="active" class="nav-link" exact>Search</b-nav-item>
-        <b-nav-item :to="{ name: 'seasonGames' }"  tag ="a" active-class="active" class="nav-link" exact>Current Season Games</b-nav-item>
-        <b-nav-item :to="{ name: 'about' }"  tag ="a" active-class="active" class="nav-link" exact>About</b-nav-item>
-        </b-navbar-nav>
-
-        <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
-          <h1 class="user">Hello Guest</h1>
-          <b-nav-item :to="{ name: 'login' }">Login</b-nav-item>
-          <b-nav-item :to="{ name: 'register' }">Register</b-nav-item>
-        </b-navbar-nav>
-        
-        <b-navbar-nav class="ml-auto" v-else>
-
-<!-- Put profile picrure here  ---------------------------------->
-      <img class="picture"
-      :src="get_image()"
-    />
-        <h1 class="user" >Welecom back {{$root.store.username}} </h1>
+      <!-- middle aligned nav items -->
+      <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
+        <b-navbar-brand class="user" >Hello Guest</b-navbar-brand>
+        <b-nav-item :to="{ name: 'login' }" tag ="a" active-class="active" class="nav-link" exact>Login</b-nav-item>
+        <b-nav-item :to="{ name: 'register' }" tag ="a" active-class="active" class="nav-link" exact>Register</b-nav-item>
+      </b-navbar-nav>
+    
+      
+      <b-navbar-nav class="ml-auto" v-else>
+      <!-- Put profile picrure here  ---------------------------------->
+      <img class="picture" :src="get_image()"/>
+        <b-navbar-brand class="user" >Welecom back {{$root.store.username}} </b-navbar-brand>
         <b-nav-item-dropdown text="Personal" right>
           <template #button-content>
             User
@@ -33,7 +32,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <router-view />
+    <router-view/>
     </div>
 </template>
 
@@ -65,16 +64,21 @@
 
 .user{
   color: rgb(255, 255, 255);
-  text-align:center;
-  position: inherit;
+  text-align:left;
+  position: relative;
+  right:550px;
+  font-size: 28px;
+
 }
 
 .picture{
        height: 70px;
        line-height: 70px;
        left: 550px;
-        float: left;
+      float: left;
 
 }
-
+.nav-link{
+  font-size: 15px;
+}
 </style>

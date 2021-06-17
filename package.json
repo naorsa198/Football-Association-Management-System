@@ -12,11 +12,17 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "gridjs-vue": "^5.0.1",
     "sass": "^1.34.1",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-router": "^3.2.0",
-    "vuelidate": "^0.7.5"
+    "vue-table-component": "^1.9.2",
+    "vue-table-dynamic": "^0.4.5",
+    "vue-virtual-table": "^0.2.19",
+    "vue3-table-lite": "^1.0.5",
+    "vuelidate": "^0.7.5",
+    "vuetable-2": "^2.0.0-beta.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
