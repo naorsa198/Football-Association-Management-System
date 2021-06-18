@@ -27,19 +27,20 @@
     <br/>
     Your search Query: {{searchQuery }}
     <br>
-
-     <input  v-if="!teamsearch && !positionFlag  && !filterTeamName" type="checkbox" id="player" value="player" v-model="playersearch">
-     <label v-if="!teamsearch" for="jack">Search player__</label>
+<div class="divBox">
+    <h4> Choose What to Search For : </h4>
+     <input class="intput-check" v-if="!teamsearch && !positionFlag  && !filterTeamName" type="checkbox" id="player" value="player" v-model="playersearch">
+     <label class="intput-label" v-if="!teamsearch" for="jack">Search player__</label>
         
-      <input v-if="!playersearch && !positionFlag && !filterTeamName" type="checkbox" id="team" value="team" v-model="teamsearch" >
-      <label  v-if="!playersearch && !positionFlag  && !filterTeamName" for="john">Search Team</label>
+      <input  class="intput-check" v-if="!playersearch && !positionFlag && !filterTeamName" type="checkbox" id="team" value="team" v-model="teamsearch" >
+      <label  class="intput-label"  v-if="!playersearch && !positionFlag  && !filterTeamName" for="john">Search Team</label>
       
-      <input  v-if="!teamsearch" type="checkbox" id="postion" value="position" v-model="positionFlag">
-      <label v-if="!teamsearch" for="jack">Filter By position__</label>
+      <input  class="intput-check"  v-if="!teamsearch && playersearch" type="checkbox" id="postion" value="position" v-model="positionFlag">
+      <label class="intput-label"  v-if="!teamsearch && playersearch" for="jack">Filter By position__</label>
 
-       <input  v-if="!teamsearch" type="checkbox" id="filterTeamName" value="filterTeamName" v-model="filterTeamName">
-      <label v-if="!teamsearch" for="jack">Filter By Team Name</label>
-            
+       <input  class="intput-check"  v-if="!teamsearch && playersearch" type="checkbox" id="filterTeamName" value="filterTeamName" v-model="filterTeamName">
+      <label  class="intput-label" v-if="!teamsearch && playersearch" for="jack">Filter By Team Name</label>
+ </div >           
      
   <br>
 
@@ -294,5 +295,32 @@ export default {
 
 .card :hover {
 cursor: pointer;
+}
+
+.title{
+  text-align: center
+}
+
+.intput-check  {
+
+display: inline-block;
+
+-webkit-box-shadow: -3px 5px 10px 28px #38BBFF; 
+box-shadow: -3px 5px 10px 2px #38BBFF;
+background-color: #1C6EA4;
+ width: 10px;
+ height: 10x;
+ color: #FFF;
+ padding: 10px;
+ content:50px auto 0;
+}
+
+.divBox{
+text-align: center;
+}
+
+.intput-label{
+ content: 50px auto 0;
+
 }
 </style>

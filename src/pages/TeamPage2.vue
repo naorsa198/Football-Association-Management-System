@@ -5,14 +5,15 @@
   >
 
 <!-- ----------------------------------------------------TeamDetails------------------------------------------- -->
-
+      
+      <b-list-group-item> {{prop.country}} </b-list-group-item>
+      <br>
       <b-list-group-item> {{prop.continent}} </b-list-group-item>
       <br>
-      <b-list-group-item> {{prop.id}} </b-list-group-item>
+      <!-- <b-list-group-item> {{prop.id}} </b-list-group-item>
+      <br> -->
+      <img :src="get_image()" style="img" />
       <br>
-      <img :src="get_image()" />
-      <br>
-      <b-list-group-item> {{prop.cuntry}} </b-list-group-item> -->
 
 <!-- ------------------------------------------------TeamPlayers----------------------------------------- -->
 
@@ -148,5 +149,6 @@
   display: inline-block;
   background: red;
 }
+
 
 </style>
