@@ -41,7 +41,7 @@ const routes = [
   {
     path: "/currSeasonGames",
     name: "currSeasonGames",
-    component: () => import("./pages/seasonGamesPage")
+    component: () => import("./pages/SeasonGamesPage")
   },
   {
     path: "/about",
