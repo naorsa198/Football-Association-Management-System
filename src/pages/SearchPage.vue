@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class>
     <h1 class="title">Search Page</h1>
-    <b-input-group prepend="Search Query:" id="search-input">
+    <b-input-group prepend="Search Query:" id="search-input" class="divBox">
       <b-form-input v-model="searchQuery"></b-form-input>
         
       <b-form-input v-if="positionFlag===true" v-model="position" placeholder="Position Number">
         <b-input-group-append>
-          <b-button @click="startSearch()" variant="success">Search</b-button>
+          <b-button @click="startSearch()" variant="success" >Search</b-button>
         </b-input-group-append>
       </b-form-input>
 
@@ -291,6 +291,7 @@ export default {
 #search-input {
   margin-left: 20px; 
   width: 500px; 
+  
 }
 
 .card :hover {

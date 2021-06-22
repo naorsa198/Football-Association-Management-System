@@ -8,6 +8,8 @@
           <b-nav-item :to="{ name: 'search' }"  tag ="a" active-class="active" class="nav-link" exact>Search</b-nav-item>
           <b-nav-item :to="{ name: 'currSeasonGames' }"  tag ="a" active-class="active" class="nav-link" exact>Current Season Games</b-nav-item>
           <b-nav-item :to="{ name: 'about' }"  tag ="a" active-class="active" class="nav-link" exact>About</b-nav-item>
+          <b-nav-item v-if="$root.store.adminflag" :to="{ name: 'AdminPage' }"  tag ="a" active-class="active" class="nav-link" exact>Admin</b-nav-item>
+
       </b-navbar-nav>
 
       <!-- middle aligned nav items -->

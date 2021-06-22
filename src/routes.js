@@ -48,6 +48,13 @@ const routes = [
     name: "about",
     component: () => import("./pages/AboutPage")
   },
+  
+{
+  path: "/AdminPage",
+  name: "AdminPage",
+  component: () => import("./pages/AdminPage")
+},
+
 
   {
     path: "*",
