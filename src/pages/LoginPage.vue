@@ -72,7 +72,7 @@ export default {
       form: {
         username: "",
         password: "",
-        submitError: undefined
+        submitError: undefined,
       }
     };
   },
@@ -104,6 +104,7 @@ export default {
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
        
+       
         // const img = await this.axios.get(
         //   "http://localhost:3000/img",
         //   {
@@ -112,8 +113,6 @@ export default {
         // );
          this.$root.store.login(this.form.username, response.data);
         this.$router.push("/");
-
-
       } 
       catch (err) {
         console.log(err.response);
@@ -130,7 +129,23 @@ export default {
       // console.log("login method go");
 
       this.Login();
+    },
+  async  AdminCheck(){
+        try{
+          const admin = await this.axios.get(`http://localhost:3000/admin/AdminCheck/${this.form.username}`)
+          if(admin.status==200){
+            this.$root.store.admin(true);
+          }
+        }catch(error){
+         console.log(err.response);
+        }
+
+
     }
+  },
+  beforeDestroy(){
+          this.AdminCheck();
+
   }
 };
 </script>

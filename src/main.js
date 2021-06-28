@@ -2017,7 +2017,12 @@ const shared_data = {
   teamsearch: localStorage.teamsearch,
   playerdetail: localStorage.gamedetail,
   teamdetail: localStorage.teamdetail,
+  adminflag : localStorage.adminflag,
 
+  admin(){
+    localStorage.setItem("adminflag",true)
+    this.adminflag = true;
+  },
   
   // username: "hilla",
   login(username,img) {
@@ -2069,6 +2074,7 @@ const shared_data = {
     this.gamedetail= undefined;
     this.teamdetail=undefined;
     this.playerdetail= undefined;
+    this.adminflag = false;
   }
 };
 console.log(shared_data);

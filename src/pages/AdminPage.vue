@@ -18,7 +18,7 @@
 <script>
 
     import AddGame from '../components/AddGame'
-    import seasonGamesPage from "../pages/seasonGamesPage";
+    import seasonGamesPage from "../pages/SeasonGamesPage";
     export default {
           components: {  },
         data(){
