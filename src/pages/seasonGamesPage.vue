@@ -1,6 +1,6 @@
 <template>
   <div>
-     <SeasonGamesPreview :oldG="resultsOld" :futureG="resultsFuture"></SeasonGamesPreview> 
+     <SeasonGamesPreview :oldG="resultsOld" :futureG="resultsFuture" :eventsG="resultsEvents"></SeasonGamesPreview> 
   </div>
 </template>
 
@@ -14,6 +14,7 @@
       return {
           resultsFuture :Object,
           resultsOld :Object,
+          resultsEvents: Object,
       }
     },
     methods:{
@@ -41,11 +42,26 @@
         this.status=resultsOld.status
         this.resultsOld= JSON.parse(JSON.stringify(resultsOld.data))
         console.log("resultsOld",this.resultsOld)
+        },
+
+        async getOldGamesEvents(resultsEvents){
+        try {
+            resultsEvents = await this.axios.get(
+            `http://localhost:3000/game/allGamesEvents`
+            );
+        } catch (err) {
+            console.log("server:"+err.response);
+        }
+        this.status=resultsEvents.status
+        this.resultsEvents= JSON.parse(JSON.stringify(resultsEvents.data))
+        console.log("resultsEvents",this.resultsEvents)
         }
     },
     beforeMount(){
       this.getLeagueFutureGames();
       this.getLeagueOldGames();
+      this.getOldGamesEvents();
+
   },
   };
 </script>

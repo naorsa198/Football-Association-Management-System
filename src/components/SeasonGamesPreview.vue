@@ -17,6 +17,15 @@
     :vue-virtual-table="false"
     > 
     </vue-virtual-table>
+    <br>
+    <h3 title-tag="h3" class="titelh3">Old Games Events</h3> 
+    <vue-virtual-table :config="eventsTableHeadline"
+    :data="this.eventsG"
+    :itemHeight="55"
+    :hoverHighlight	="false"
+    :vue-virtual-table="false"
+    > 
+    </vue-virtual-table>
 
   </div>
 </template>
@@ -27,21 +36,27 @@ import VueVirtualTable from 'vue-virtual-table'
   export default {
     name: "SeasonGamesPreview",
      components: {
-       VueVirtualTable
+       VueVirtualTable,
+       
     },
     props: {
         futureG:Object,
-        oldG: Array
+        oldG: Array,
+        eventsG: Object
     },
-    data: () => ({
-          futureTableHeadline: [{ prop: 'game_id' ,name:"Game_id"  },{ prop: 'localteam' },{ prop: 'vistoreteam' }, { prop: 'date' }, { prop: 'fild' }, { prop: 'localteam' }, { prop: 'mainJudge' }, { prop: 'secondaryjudge' }, { prop: 'localteam_score' }, { prop: 'visitoreteam_score' }],
+    data () { 
+      return{
+          futureTableHeadline: [{ prop: 'game_id' ,name:"Game_id"  },{ prop: 'localteam',name:"Local Team" },{ prop: 'vistoreteam',name:"Vistor Team" }, { prop: 'date' ,name:"Date"}, { prop: 'fild' ,name:"Fild"},
+           { prop: 'mainJudge',name:"Main Judge" }, { prop: 'secondaryjudge',name:"Secondary Judge"}, { prop: 'localteam_score' ,name:"Local Team Score"}, { prop: 'visitoreteam_score',name:"Visitor Team Score" }],
           // futureTableHeadline: [ 'game_id' ,'localteam','vistoreteam' ,'date' , 'fild' ,'localteam','mainJudge' ,'secondaryjudge' ,'localteam_score' , 'visitoreteam_score'],
 
-          oldTableHeadline: [{ prop: 'game_id' }, { prop: 'localteam' },{ prop: 'vistoreteam' }, { prop: 'date' }, { prop: 'fild' }, { prop: 'localteam' }, { prop: 'mainJudge' }, { prop: 'secondaryjudge' }, { prop: 'localteam_score' }, { prop: 'visitoreteam_score' },{ prop: 'game_events' }],
-       
-   })
+          oldTableHeadline: [{ prop: 'game_id' ,name:"Game_id"  },{ prop: 'localteam',name:"Local Team" },{ prop: 'vistoreteam',name:"Vistor Team" }, { prop: 'date' ,name:"Date"}, { prop: 'fild' ,name:"Fild"},
+           { prop: 'mainJudge',name:"Main Judge" }, { prop: 'secondaryjudge',name:"Secondary Judge"}, { prop: 'localteam_score' ,name:"Local Team Score"}, { prop: 'visitoreteam_score',name:"Visitor Team Score" },{ prop: 'game_events' }],
+          
+          eventsTableHeadline: [{ prop: 'game_id' ,name:"Game_id"  },{ prop: 'date' ,name:"Date"}, { prop: 'minute' ,name:"Minute"}, { prop: 'description' ,name:"Description"}],
     // end data
 
+  }}
 
   }
   
