@@ -1,30 +1,76 @@
 <template>
 <div>
-    <div>
-        <SeasonGamesPage   > </SeasonGamesPage>
-    </div>
+   <div>
+     <SeasonGamesPreview :oldG="resultsOld" :futureG="resultsFuture" :eventsG="resultsEvents"></SeasonGamesPreview> 
+  </div>
 
   <b-button variant="success" @click="addGame">Add Game</b-button>
+  <b-button variant="primary" @click="addResult">Add Results</b-button>
 
 </div>
 
 </template>
 
 <script>
+    import SeasonGamesPreview from "../components/SeasonGamesPreview";
 
     import AddGame from '../components/AddGame'
     import seasonGamesPage from "../pages/SeasonGamesPage";
     export default {
-          components: {  },
+          components: { SeasonGamesPreview },
         data(){
-            resultteam=[];
-            showModal=false;
+          return{
+           resultsFuture :Object,
+            resultsOld :Object,
+            resultsEvents: Object,
+           }
+        },
+        methods:{
+          async getLeagueFutureGames(resultsFuture){
+        try {
+            resultsFuture = await this.axios.get(
+            `http://localhost:3000/league/getLeagueFutureGames`
+            );
+        } catch (err) {
+            console.log("server:"+err.response);
+            }
+        this.status=resultsFuture.status;
+        this.resultsFuture= resultsFuture.data;
+        console.log("resultsFuture",(this.resultsFuture))
         },
 
-        methods:{
+        async getLeagueOldGames(resultsOld){
+        try {
+            resultsOld = await this.axios.get(
+            `http://localhost:3000/league/getLeagueOldGames`
+            );
+        } catch (err) {
+            console.log("server:"+err.response);
+        }
+        this.status=resultsOld.status
+        this.resultsOld= JSON.parse(JSON.stringify(resultsOld.data))
+        console.log("resultsOld",this.resultsOld)
+        },
+ async getOldGamesEvents(resultsEvents){
+        try {
+            resultsEvents = await this.axios.get(
+            `http://localhost:3000/game/allGamesEvents`
+            );
+        } catch (err) {
+            console.log("server:"+err.response);
+        }
+        this.status=resultsEvents.status
+        this.resultsEvents= JSON.parse(JSON.stringify(resultsEvents.data))
+        console.log("resultsEvents",this.resultsEvents)
+        },
 
 addGame(){
         this.$router.push("/AddGame");
+},
+
+addResult(){
+          this.$router.push("/addResult");
+
 },
 async getTeams(resultteam){ 
       this.flag=true
@@ -47,11 +93,12 @@ async getTeams(resultteam){
 
         },
        
-       create:{
+      beforeMount(){
+      this.getLeagueFutureGames();
+      this.getLeagueOldGames();
+      this.getOldGamesEvents();
 
-
-
-       }
+  },
     }
 </script>
 

@@ -281,14 +281,7 @@ export default {
           this.token=true;
           console.log(this.token);
       }
-          if(response.status != 201){
-          this.token=true;
-          console.log(this.token);
-          }
-          if(response.status ==201) 
-          {
-          this.flagConfirm=true;
-          }
+          
           this.flagConfirm=true;
         
         console.log(this.token);

@@ -25,8 +25,12 @@
 
   
       
-      <h1> herer {{teamid}}</h1>
+      <h1> Team ID {{teamid}}</h1>
+      <p>
+      <h3 class="title">Players</h3>
       <span class="card" v-for="res in $root.players" :key="res">
+      <!-- <span class="card" v-for="res in teamPlayers" :key="res">    OPEN THIS FOR PLAYERS -->
+
       <router-link to="/PlayerPage" tag="PlayerPreview"  active-class="active" 
          class="card"  @click.native = PlayerDetail(res) >
       <PlayerPreview :propObj="res"></PlayerPreview>
@@ -38,24 +42,26 @@
 <!-- ------------------------------------------------------Games of team--------------------------------------- -->
 
     <div>
-        <h1>Team Games</h1>
-          <!-- <span  v-for="res in teamPlayers" :key="res">       -->
-     <span v-for="g in futureGame" :key="g.id">
-       {{g.local_team}}
+        <h1 class="title">Team Games</h1>
+          
+          <span  v-for=" g in futureGame" :key="g">     
+     <b-card footer-tag="footer" title="" class="main-card">
+
        <b-card-text class="main-GamePreview">
      <GamePreview
-      v-for="g in futureGame"
-      :id="g.game_id" 
-      :hostTeam="g.localteam" 
-      :guestTeam="g.vistoreteam" 
-      :date="g.date"
-      :hour="g.locatteam_score" 
-      :fild="g.fild" 
-      :mainJudge ="g.mainJudge"
+      :id="g.id" 
+      :hostTeam="g.local_team" 
+      :guestTeam="g.vistore_team" 
+      :date="g.game_date"
+      :hour="gethour(g.game_date)"
+      :fild="g.location" 
+      :mainJudge ="g.main_judge"
       :secondaryjudge="g.secondaryjudge"
-      :key="g.game_id">
+      :key="g.id">
       </GamePreview>>
       </b-card-text >
+          </b-card>
+
 </span>
     </div>
 
@@ -70,7 +76,7 @@
 
     export default { 
       name: "TeamPage",
-      components: { PlayerPreview },
+      components: { PlayerPreview ,GamePreview},
       data(){
         return{
           prop: Object,
@@ -82,6 +88,7 @@
           flag:true,
           futureGame:Object,
           oldGame:Object,
+          hour: "20:00"
       }
       },
     methods: {
@@ -129,19 +136,20 @@
       this.futureGame= futureGame.data
       console.log(this.futureGame)
     },
-    
+      gethour(hour){
+          if(hour==="")
+            return "00:00"
+          let time = hour.toString().split("T");
+      let time2= time[1].slice(0,5);
+           return time2.toString();
+        }
     },
     computed:{
         teamPlayers()
         {
           return this.resultnew;
         },
-        gethour(hour){
-          if(hour==="")
-            return "00:00"
-          const time = hour.slice(0, 19).replace("T", " ");
-           return time;
-        }
+      
     },
 
     async mounted() {
@@ -151,7 +159,7 @@
     async created() {
     this.prop=this.$root.store.teamdetail;
     this.teamid = this.prop.id;
- //   await this.getTeamFullDetails();
+ //   await this.getTeamFullDetails() ;  OPEN THIS FOR PLAYERS -->
     console.log(this.resultnew);
     console.log("dsfdsf");
     },
@@ -160,14 +168,27 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .card{
   display: inline-block;
-  background: red;
-}
-.main-card{
-  margin-top: 5%;
-  background: rgba(255, 253, 221, 0.75);
 }
 
+
+.blur {
+  -webkit-filter: blur(10px); /* Safari 6.0 - 9.0 */
+  filter: blur(2px);
+}
+::v-deep .blur .recipe-preview {
+  pointer-events: none;
+  cursor: default;
+}
+.main-card{
+  display: block;
+  width: 300px;
+  margin-top: 5%;
+  background: rgba(110, 105, 30, 0.75);
+}
+.title{
+  text-align: center
+}
 </style>

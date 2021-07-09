@@ -68,7 +68,11 @@ component: () => import("./components/AddGame")
 
 
 },
-
+{
+  path: "/addResult",
+name: "addResult",
+component: () => import("./pages/addResult")
+},
   {
     path: "*",
     name: "notFound",
