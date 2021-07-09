@@ -20,8 +20,11 @@ export default {
     methods:{
         async getFavoriteGames(results){
             try {
-                results = await this.axios.get(
-                `http://localhost:3000/game/favoriteGames`
+                const params = {
+               name: "nicole"
+                }
+            results = await this.axios.get(
+                `http://localhost:3000/game/favoriteGames/${params.name}`
                 );
             } catch (err) {
                 console.log("server:"+err.response);

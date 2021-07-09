@@ -42,12 +42,15 @@
           <!-- <span  v-for="res in teamPlayers" :key="res">       -->
       <GamePreview
       v-for="g in futureGame"
-      :id="g.id" 
-      :hostTeam="g.hostTeam" 
-      :guestTeam="g.guestTeam" 
-      :date="g.date" 
-      :hour="g.hour" 
-      :key="g.id">
+      :id="g.game_id" 
+      :hostTeam="g.localteam" 
+      :guestTeam="g.vistoreteam" 
+      :date="g.date"
+      :hour="g.locatteam_score" 
+      :fild="g.fild" 
+      :mainJudge ="g.mainJudge"
+      :secondaryjudge="g.secondaryjudge"
+      :key="g.game_id">
       </GamePreview>>
 
     </div>
