@@ -1,24 +1,20 @@
 <template>
   <div class="container" style="background-image:url(http://www.4reallearning.com/wp-content/uploads/2019/07/Premier-League-ball.jpg);
   height:830px;  width:1170px;">
-    <!-- <h1 class="title">Main Page</h1> -->
-    <!-- background image -->
-    <!-- <b-card
-    overlay
-    img-src="https://cdn.sportmonks.com/images/soccer/leagues/271.png"
-    img-height="450px"
-    >
-  </b-card> -->
   <!-- table info -->
    <b-card-group deck>
      <!-- left card -->
     <b-card footer-tag="footer" title="" class="main-card">
       <b-card-text class="main-LeagueInfo" > <LeagueInfo></LeagueInfo></b-card-text>
-      <b-card-text class="main-GamePreview"><GamePreview :id="results.id" 
+      <b-card-text class="main-GamePreview"><GamePreview 
+      :id="results.game_id" 
       :hostTeam="results.localteam" 
       :guestTeam="results.vistoreteam" 
       :date="results.date"
       :hour="results.locatteam_score" 
+      :fild="results.fild" 
+      :mainJudge ="results.mainJudge"
+      :secondaryjudge="results.secondaryjudge"
       :key="results.id"></GamePreview></b-card-text>
       <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
     </b-card>
@@ -27,7 +23,7 @@
     <b-card title=""  footer-tag="footer" class="main-card">
       <b-card-text>
         <LoginPage v-if="!$root.store.username"></LoginPage>
-        <FavoriteGames v-else></FavoriteGames>
+        <FavotiteGamePage v-else></FavotiteGamePage>
       </b-card-text>
       <!-- <template #footer>
         <em>Footer Slot</em>
@@ -40,14 +36,14 @@
 
 <script>
 import LeagueInfo from "../components/LeagueInfo";
-import FavoriteGames from "../components/FavoriteGames";
+import FavotiteGamePage from "../pages/FavotiteGamePage";
 import LoginPage from "../pages/LoginPage";
 import GamePreview from "../components/GamePreview";
 export default {
   components: {
     LeagueInfo, 
     LoginPage, 
-    FavoriteGames,
+    FavotiteGamePage,
     GamePreview
   },
   data(){
@@ -76,9 +72,9 @@ export default {
       this.results.locatteam_score =date.split(".")[0];
     }
   },
-  // beforeMount(){
-  //   this.nextGameInLeague()
-  // }
+  beforeMount(){
+    this.nextGameInLeague()
+  }
 };
 </script>
 

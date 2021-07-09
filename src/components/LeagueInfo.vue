@@ -5,9 +5,9 @@
       </div>
       <ul class=".league-content">
         <b-card-text>
-        Season: {{ season }}
+        Season: {{ this.season }}
         <br/>
-        Stage: {{ stage }}
+        Stage: {{ this.stage }}
       </b-card-text>
       </ul>
       <!-- <b-card
@@ -28,7 +28,7 @@ export default {
  data() {
     return {
       leagueName: "superliga", 
-      season: "season", 
+      season: "18334", 
       stage: "stage"
     };
   },

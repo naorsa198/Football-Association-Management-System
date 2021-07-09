@@ -8,6 +8,9 @@
       <li> guest: {{ guestTeam }}</li>
       <li> date: {{ date }}</li>
       <li> time: {{ hour }}</li>
+      <li> fild: {{ fild }}</li>
+      <li> mainJudge: {{ mainJudge }}</li>
+      <li> secondaryjudge: {{ secondaryjudge }}</li>
     </ul>
   </div>
 </template>
@@ -35,6 +38,18 @@ export default {
       hour: {
         type: String,
         required: true
+      },
+      fild: {
+        type: String,
+        require: true
+      },
+      mainJudge:{
+        type: String,
+        require: true
+      },
+      secondaryjudge:{
+        type: String,
+        require: true
       }
   }, 
   mounted(){
@@ -56,18 +71,13 @@ export default {
   border-color:cadetblue;
   background: rgba(255, 253, 221, 0.6);
 }
-
 .game-preview .game-title {
   text-align: center;
   text-transform: uppercase;
   color:  rgb(111, 197, 157);
 }
-
 .game-preview .game-content {
   width: 100%;
   overflow: hidden;
 }
-
-
-
 </style>
