@@ -131,6 +131,9 @@
     return this.resultnew;
     }
     },
+   async mounted() {
+          await this.getFutureTeamGames()
+    },
 
     async created() {
     this.prop=this.$root.store.teamdetail;

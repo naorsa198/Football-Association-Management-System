@@ -55,6 +55,13 @@ const routes = [
   component: () => import("./pages/AdminPage")
 },
 
+{
+path: "/AddGame",
+name: "AddGame",
+component: () => import("./components/AddGame")
+
+
+},
 
   {
     path: "*",

@@ -1,18 +1,13 @@
 <template>
+<div>
+    <div>
+        <SeasonGamesPage   > </SeasonGamesPage>
+    </div>
 
-        <div>
-    <b-button v-b-modal.modal-1>Launch demo modal</b-button>
+  <b-button variant="success" @click="addGame">Add Game</b-button>
 
-    <b-modal id="modal-1" title="BootstrapVue">
-        <p class="my-4">Hello from modal!</p>
-    </b-modal>  
 </div>
 
-<!-- 
-        <div clase="games">
-            
-            <seasonGamesPage></seasonGamesPage>
-        </div> -->
 </template>
 
 <script>
@@ -28,8 +23,8 @@
 
         methods:{
 
-Showmodel(){
-    this.showModal=true;
+addGame(){
+        this.$router.push("/AddGame");
 },
 async getTeams(resultteam){ 
       this.flag=true
