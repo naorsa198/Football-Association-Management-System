@@ -40,16 +40,21 @@
     <div>
         <h1>Team Games</h1>
           <!-- <span  v-for="res in teamPlayers" :key="res">       -->
+     <span v-for="g in futureGame" :key="g.id">
+       {{g.local_team}}
+       <b-card-text class="main-GamePreview">
       <GamePreview
-      v-for="g in futureGame"
       :id="g.id" 
-      :hostTeam="g.hostTeam" 
-      :guestTeam="g.guestTeam" 
-      :date="g.date" 
-      :hour="g.hour" 
-      :key="g.id">
+      :hostTeam="g.local_team" 
+      :guestTeam="g.vistore_team" 
+      :date="g.game_date" 
+      :fild="g.location"
+      :mainJudge="g.main_judge"
+      :secondaryjudge="g.secondaryjudge"
+      >
       </GamePreview>>
-
+      </b-card-text >
+</span>
     </div>
 
 </div>
@@ -119,20 +124,26 @@
         console.log("server:"+err.response);
       }
       console.log(futureGame.status);
-      console.log(futureGame);
       this.futureGame= futureGame.data
       console.log(this.futureGame)
     },
     
     },
     computed:{
-     teamPlayers()
-    {
-    return this.resultnew;
-    }
+        teamPlayers()
+        {
+          return this.resultnew;
+        },
+        gethour(hour){
+          if(hour==="")
+            return "00:00"
+          const time = hour.slice(0, 19).replace("T", " ");
+           return time;
+        }
     },
-   async mounted() {
-          await this.getFutureTeamGames()
+
+    async mounted() {
+      await this.getFutureTeamGames()
     },
 
     async created() {
@@ -152,6 +163,9 @@
   display: inline-block;
   background: red;
 }
-
+.main-card{
+  margin-top: 5%;
+  background: rgba(255, 253, 221, 0.75);
+}
 
 </style>
