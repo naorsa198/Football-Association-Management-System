@@ -51,7 +51,7 @@ const routes = [
   {
     path:"/favorites",
     name:"favorites",
-    component:() => import("./pages/FavotiteGamePage")
+    component:() => import("./pages/FavoriteGamePage")
   },
   
   

@@ -23,7 +23,7 @@
     <b-card title=""  footer-tag="footer" class="main-card">
       <b-card-text>
         <LoginPage v-if="!$root.store.username"></LoginPage>
-        <FavotiteGamePage v-else></FavotiteGamePage>
+        <FavoriteGamePage v-else :userName= "$root.store.username"></FavoriteGamePage>
       </b-card-text>
       <!-- <template #footer>
         <em>Footer Slot</em>
@@ -36,19 +36,20 @@
 
 <script>
 import LeagueInfo from "../components/LeagueInfo";
-import FavotiteGamePage from "../pages/FavotiteGamePage";
+import FavoriteGamePage from "../pages/FavoriteGamePage";
 import LoginPage from "../pages/LoginPage";
 import GamePreview from "../components/GamePreview";
 export default {
   components: {
     LeagueInfo, 
     LoginPage, 
-    FavotiteGamePage,
+    FavoriteGamePage,
     GamePreview
   },
   data(){
     return{
-      results: Object
+      results: Object,
+      userName :String
     }
   },
   methods:{
