@@ -6,6 +6,7 @@
      <!-- left card -->
     <b-card footer-tag="footer" title="" class="main-card">
       <b-card-text class="main-LeagueInfo" > <LeagueInfo></LeagueInfo></b-card-text>
+     Next Game:
       <b-card-text class="main-GamePreview"><GamePreview 
       :id="results.game_id" 
       :hostTeam="results.localteam" 

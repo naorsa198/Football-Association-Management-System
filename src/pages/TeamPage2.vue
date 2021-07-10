@@ -28,9 +28,8 @@
       <h1> Team ID {{teamid}}</h1>
       <p>
       <h3 class="title">Players</h3>
-      <span class="card" v-for="res in $root.players" :key="res">
-      <!-- <span class="card" v-for="res in teamPlayers" :key="res">    OPEN THIS FOR PLAYERS -->
-
+      <!-- <span class="card" v-for="res in $root.players" :key="res"> -->
+      <span class="card" v-for="res in teamPlayers" :key="res">   
       <router-link to="/PlayerPage" tag="PlayerPreview"  active-class="active" 
          class="card"  @click.native = PlayerDetail(res) >
       <PlayerPreview :propObj="res"></PlayerPreview>
@@ -43,8 +42,18 @@
 
     <div>
         <h1 class="title">Team Games</h1>
-          
-          <span  v-for=" g in futureGame" :key="g">     
+      <GamePreview
+      v-for="g in futureGame"
+      :id="g.game_id" 
+      :hostTeam="g.localteam" 
+      :guestTeam="g.vistoreteam" 
+      :date="g.date"
+      :hour="g.locatteam_score" 
+      :fild="g.fild" 
+      :mainJudge ="g.mainJudge"
+      :secondaryjudge="g.secondaryjudge"
+      :key="g.game_id"></GamePreview>
+          <!-- <span  v-for=" g in futureGame" :key="g.id"> 
      <b-card footer-tag="footer" title="" class="main-card">
 
        <b-card-text class="main-GamePreview">
@@ -62,7 +71,7 @@
       </b-card-text >
           </b-card>
 
-</span>
+</span> -->
     </div>
 
 </div>
@@ -73,7 +82,6 @@
 <script>
  import  PlayerPreview from "../components/PlayerPreview";
   import  GamePreview from "../components/GamePreview";
-
     export default { 
       name: "TeamPage",
       components: { PlayerPreview ,GamePreview},
@@ -96,7 +104,6 @@
       PlayerDetail(res){
     this.$root.store.toPlayerPage(res);
     },
-
     get_image() {
         if(this.prop.logo_path != undefined){
         return this.prop.logo_path;
@@ -119,9 +126,7 @@
       console.log(resultteam);
       this.resultnew= resultteam.data
       console.log(this.resultsteam)
-
     },
-
     async getFutureTeamGames(futureGame){ 
       this.flag=true
         this.teamid=this.prop.id;
@@ -151,19 +156,16 @@
         },
       
     },
-
     async mounted() {
       await this.getFutureTeamGames()
     },
-
     async created() {
     this.prop=this.$root.store.teamdetail;
     this.teamid = this.prop.id;
- //   await this.getTeamFullDetails() ;  OPEN THIS FOR PLAYERS -->
+   await this.getTeamFullDetails() ;  
     console.log(this.resultnew);
     console.log("dsfdsf");
     },
-
     
   }
 </script>
@@ -172,8 +174,6 @@
 .card{
   display: inline-block;
 }
-
-
 .blur {
   -webkit-filter: blur(10px); /* Safari 6.0 - 9.0 */
   filter: blur(2px);

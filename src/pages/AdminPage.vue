@@ -1,12 +1,12 @@
 <template>
 <div>
+    <h2>Hello, Do you whant to:  
+  <b-button variant="success" @click="addGame" class="b1"> <b-icon icon="controller"></b-icon> Add Game</b-button>
+  <b-button variant="primary" @click="addResult" class="b2"> <b-icon icon="clipboard-data"></b-icon> Add Results</b-button>
+  </h2>
    <div>
      <SeasonGamesPreview :oldG="resultsOld" :futureG="resultsFuture" :eventsG="resultsEvents"></SeasonGamesPreview> 
   </div>
-
-  <b-button variant="success" @click="addGame">Add Game</b-button>
-  <b-button variant="primary" @click="addResult">Add Results</b-button>
-
 </div>
 
 </template>
@@ -104,6 +104,11 @@ async getTeams(resultteam){
 
 
 
-<style lang="scss" scoped>
-
+<style lang="scss" >
+.b1{
+  margin-left: 10px;
+}
+.b2{
+  margin-left: 10px;
+}
 </style>

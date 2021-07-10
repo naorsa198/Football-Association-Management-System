@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="search">
     <h1 class="title">Search Page</h1>
     <b-input-group prepend="Search Query:" id="search-input" class="divBox">
       <b-form-input v-model="searchQuery"></b-form-input>
@@ -288,6 +288,9 @@ export default {
 
 <style scoped>
 
+.search{
+  margin-left: 20px;
+}
 #search-input {
   margin-left: 20px; 
   width: 500px; 
@@ -298,9 +301,9 @@ export default {
 cursor: pointer;
 }
 
-.title{
+/* .title{
   text-align: center
-}
+} */
 
 .intput-check  {
 
@@ -316,9 +319,9 @@ background-color: #1C6EA4;
  content:50px auto 0;
 }
 
-.divBox{
+/* .divBox{
 text-align: center;
-}
+} */
 
 .intput-label{
  content: 50px auto 0;

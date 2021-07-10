@@ -1,7 +1,13 @@
 <template>
     <div>
         <h1 class="title">Your Favorite Next Games</h1>
-        <FavoriteGamesPreview :gameInfo="results"></FavoriteGamesPreview>
+        <div v-if="results == undefined">
+            <h3>You dont have any games in favorite</h3>
+        </div>
+        <div v-else>
+            <FavoriteGamesPreview :gameInfo="results"></FavoriteGamesPreview>
+        </div>
+        
     </div>
 </template>
 
@@ -46,8 +52,7 @@ export default {
         //     console.log("name: ",$route.params.userName)
         //     this.userName = this.$route.params.userName
         // },
-    }
-,
+    },
     created(){
         if(this.$route.params.userName){
             this.userName = this.$route.params.userName

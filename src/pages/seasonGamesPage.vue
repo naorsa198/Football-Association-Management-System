@@ -1,6 +1,6 @@
 <template>
   <div>
-     <SeasonGamesPreview :oldG="resultsOld" :futureG="resultsFuture" :eventsG="resultsEvents"></SeasonGamesPreview> 
+     <SeasonGamesPreview :oldG="resultsOld" :futureG="resultsFuture" :eventsG="resultsEvents" :isLogedin="isLogin"></SeasonGamesPreview> 
   </div>
 </template>
 
@@ -15,6 +15,8 @@
           resultsFuture :Object,
           resultsOld :Object,
           resultsEvents: Object,
+          isLogin: Boolean,
+          name: String,
       }
     },
     methods:{
@@ -58,6 +60,13 @@
         }
     },
     beforeMount(){
+        if(this.$route.params.userName){
+            this.isLogin =true;
+            this.name = this.$route.params.userName
+        }
+        else{
+             this.isLogin = false;
+        }
       this.getLeagueFutureGames();
       this.getLeagueOldGames();
       this.getOldGamesEvents();

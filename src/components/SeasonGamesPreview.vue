@@ -1,75 +1,103 @@
-<template scope="props">
+<template scope="keys">
   <div class="game-table">
-    <h1 title-tag="h1" class="titelh1">Curren games in the season</h1> 
-    <h3 title-tag="h3" class="titelh3">Future Games In The season </h3> 
-    <vue-virtual-table :config="futureTableHeadline"
-    :data="this.futureG"
-    :itemHeight="55"
-    :hoverHighlight	="false"
-    > 
-    </vue-virtual-table>
+    <h2 title-tag="h2" class="titelh2"> <b-icon icon="journals"></b-icon>Curren games in the season</h2> 
+    <h4 title-tag="h3" class="titelh3"> 
+      <b-input-group id="favorite-input" class="divBox" >Future Games In The season  
+      <b-form-input  v-if="this.isLogedin" v-model="addFavorite" placeholder="Game Id" id="box" ></b-form-input>
+        <b-button   v-if="this.isLogedin" @click="addToFavorite()" variant="outline-danger"  class="mr-2" >
+          <b-icon icon="suit-heart-fill" aria-hidden="true"></b-icon>
+          Add Game To Favorite
+          </b-button>
+    </b-input-group>
+
+    </h4> 
+
+    <b-table sticky-header responsive :items="this.futureG" :fields="futureTableHeadline" :small=true :striped=true :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      sort-icon-left>
+    </b-table>
+
+    <h4 title-tag="h3" class="titelh3">Old Games In The season </h4> 
+    <b-table sticky-header responsive  :items="this.oldG" :fields="oldTableHeadline" :small=true :striped=true :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      sort-icon-left></b-table>
+
     <br>
-    <h3 title-tag="h3" class="titelh3">Old Games In The season </h3> 
-    <vue-virtual-table :config="oldTableHeadline"
-    :data="this.oldG"
-    :itemHeight="55"
-    :hoverHighlight	="false"
-    :vue-virtual-table="false"
-    > 
-    </vue-virtual-table>
-    <br>
-    <h3 title-tag="h3" class="titelh3">Old Games Events</h3> 
-    <vue-virtual-table :config="eventsTableHeadline"
-    :data="this.eventsG"
-    :itemHeight="55"
-    :hoverHighlight	="false"
-    :vue-virtual-table="false"
-    > 
-    </vue-virtual-table>
+    <h4 title-tag="h3" class="titelh3">Old Games Events</h4> 
+    <b-table sticky-header responsive :items="this.eventsG" :fields="eventsTableHeadline" :small=true :striped=true :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      sort-icon-left></b-table>
 
   </div>
 </template>
 
 <script>
-import VueVirtualTable from 'vue-virtual-table'
 
   export default {
-    name: "SeasonGamesPreview",
-     components: {
-       VueVirtualTable,
-       
-    },
+    label: "SeasonGamesPreview",
     props: {
         futureG:Object,
         oldG: Array,
-        eventsG: Object
+        eventsG: Object,
+        isLogedin: Boolean,
+        addFavorite: Number,
+        name:String,
     },
     data () { 
       return{
-          futureTableHeadline: [{ prop: 'game_id' ,name:"Game_id"  },{ prop: 'localteam',name:"Local Team" },{ prop: 'vistoreteam',name:"Vistor Team" }, { prop: 'date' ,name:"Date"}, { prop: 'fild' ,name:"Fild"},
-           { prop: 'mainJudge',name:"Main Judge" }, { prop: 'secondaryjudge',name:"Secondary Judge"}, { prop: 'localteam_score' ,name:"Local Team Score"}, { prop: 'visitoreteam_score',name:"Visitor Team Score" }],
-          // futureTableHeadline: [ 'game_id' ,'localteam','vistoreteam' ,'date' , 'fild' ,'localteam','mainJudge' ,'secondaryjudge' ,'localteam_score' , 'visitoreteam_score'],
+        
+          futureTableHeadline: [{ key: 'game_id' ,label:"Game_id"  },{ key: 'localteam',label:"Local Team", sortable: true },{ key: 'vistoreteam',label:"Vistor Team" ,sortable: true }, { key: 'date' ,label:"Date" ,sortable: true}, { key: 'fild' ,label:"Fild"},
+           { key: 'mainJudge',label:"Main Judge" }, { key: 'secondaryjudge',label:"Secondary Judge"}],
 
-          oldTableHeadline: [{ prop: 'game_id' ,name:"Game_id"  },{ prop: 'localteam',name:"Local Team" },{ prop: 'vistoreteam',name:"Vistor Team" }, { prop: 'date' ,name:"Date"}, { prop: 'fild' ,name:"Fild"},
-           { prop: 'mainJudge',name:"Main Judge" }, { prop: 'secondaryjudge',name:"Secondary Judge"}, { prop: 'localteam_score' ,name:"Local Team Score"}, { prop: 'visitoreteam_score',name:"Visitor Team Score" },{ prop: 'game_events' }],
+          oldTableHeadline: [{ key: 'game_id' ,label:"Game_id"  },{ key: 'localteam',label:"Local Team"  ,sortable: true},{ key: 'vistoreteam',label:"Vistor Team" ,sortable: true }, { key: 'date' ,label:"Date" ,sortable: true}, { key: 'fild' ,label:"Fild"},
+           { key: 'mainJudge',label:"Main Judge" }, { key: 'secondaryjudge',label:"Secondary Judge"}, { key: 'localteam_score' ,label:"Local Team Score"}, { key: 'visitoreteam_score',label:"Visitor Team Score" }],
           
-          eventsTableHeadline: [{ prop: 'game_id' ,name:"Game_id"  },{ prop: 'date' ,name:"Date"}, { prop: 'minute' ,name:"Minute"}, { prop: 'description' ,name:"Description"}],
+          eventsTableHeadline: [{ key: 'game_id' ,label:"Game_id"  },{ key: 'date' ,label:"Date" ,sortable: true}, { key: 'minute' ,label:"Minute"}, { key: 'description' ,label:"Description"}],
     // end data
 
-  }}
-
+  }},
+  methods:{
+    async addToFavorite(){
+      let response;
+      try {
+            response = await this.axios.post(
+            `http://localhost:3000/users/favoriteGames`,{
+              game_id: this.addFavorite
+            }
+            );
+        } catch (err) {
+            console.log("server:"+err.response);
+            }
+        // this.status=response.status;
+        console.log("response",(this.response))
+        },
+    },
+    mounted() {
+      this.name = this.$route.params.userName;
+    },
   }
+
+  
   
 </script>
 
-<style>
-.titelh1{
+<style lang="scss">
+.titelh2{
+  padding: inherit;
   color: rgb(0, 168, 70);
-  /* font-size: 30px; */
+
 }
-.game-table{
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.titelh3{
+    margin-left: 20px; 
+}
+
+#favorite-input {
+  margin-left: 20px; 
+  width: 320px; 
+  
+}
+.mr-2{
+  margin-left: 5px;
 }
 
 </style>

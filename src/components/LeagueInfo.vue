@@ -1,7 +1,7 @@
 <template>
     <div class="league-preview">
       <div :title="leagueName" class = ".league-title">
-        <b-card-title>League Name: {{leagueName}}</b-card-title>
+        <b-card-title>League Name: {{this.leagueName}}</b-card-title>
       </div>
       <ul class=".league-content">
         <b-card-text>
@@ -27,11 +27,34 @@
 export default {
  data() {
     return {
-      leagueName: "superliga", 
-      season: "18334", 
-      stage: "stage"
+      leagueName: String, 
+      season: String, 
+      stage: String
     };
   },
+  methods:{
+    async getLeagueDetails(){
+      let results;
+      try {
+        this.axios.defaults.withCredentials=true;
+        results = await this.axios.get(
+        `http://localhost:3000/league/getDetails`
+        );
+    } catch (err) {
+        console.log("server:"+err.response);
+        }
+    console.log("results",(results))
+    this.leagueName= results.data.league_name;
+    this.season = results.data.current_season_name;
+    this.stage = results.data.current_stage_name;
+    // console.log("results",(this.results))
+
+    },
+  },
+  beforeMount(){
+      this.getLeagueDetails();
+    }
+  
 }
 </script>
 
